@@ -1,0 +1,20 @@
+.black-background {
+	background-color: #222 !important;
+	color: #9d9d9d !important;
+}
+.white {
+	color:#ffffff;
+}
+
+
+.hallo{
+	color: white !important;
+}
+.btn-sample { 
+  color: #FFFFFF; 
+  background-color: #222; 
+  border-color: #FFFFFF; 
+}
+.btn-sample:hover{
+	color: #FFFFFF; 
+}
