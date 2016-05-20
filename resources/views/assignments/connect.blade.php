@@ -1,43 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="{{url('home/opdrachten/create')}}">Nieuwe Vraag</a>
-                 	<table>
-						<tr>
-							<th>ID</th>
-							<th>Vraag</th>
-							<th>Antwoord 1</th>
-							<th>Antwoord 2</th>
-							<th>Antwoord 3</th>
-							<th>Goede antwoord</th>
-							<th>Laatst geupdate</th>
-							<th>gecreëerd</th>
-						</tr>
-						{!! Form::open(['method' => 'post', 'url' => '/home/opdrachten/connectassignments/'. $tripid . '/' .$prevurl]) !!}
-						<tdbody>
-							@foreach ($assignments as $assignment)
-						<tr>
-							<td>{{ $assignment->id }}</td>
-							<td>{{ $assignment->question }}</td>
-							<td>{{ $assignment->answer_1 }}</td>
-							<td>{{ $assignment->answer_2 }}</td>
-							<td>{{ $assignment->answer_3 }}</td>
-							<td>{{ $assignment->correct_answer }}</td>
-							<td>{{ $assignment->updated_at }}</td>
-							<td>{{ $assignment->created_at }}</td>
-							<td><input type="checkbox" name="connect[]" value="{{$assignment->id}}"></td>
-						</tr>
-							@endforeach
-						</tdbody>
-					</table>
-					{!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
-					{!! Form::close() !!}
-                </div>
+<stlye>
+
+
+
+</stlye>
+<div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 middiv">
+                	<div class="tablediv">
+	                    <h1>Opdrachten koppelen</h1>
+	                    <a class="btn btn-primary backbutton">Terug</a>
+	                    <div class="underlineH1"></div>
+	                 	{!! Form::open(['method' => 'post', 'url' => '/home/opdrachten/connectassignments/'. $tripid . '/' .$prevurl]) !!}
+						<table class="table-striped midtable">
+	                        <tr>
+	                            <th>Type</th>
+	                            <th>Titel</th>
+	                            <th>kenmerk</th>
+	                            <th>Koppel</th>
+	                        </tr>
+	                        <tdbody>
+	                        @foreach ($assignments as $assignment)
+	                        <tr>
+	                            <td>{{ $assignment->type }}</td>
+	                            <td>{{ $assignment->title }}</td>
+	                            <?php 
+	                                $questions = $assignment->question;
+	                                $maxquestions = substr($questions, 0, 10);
+	                            ?>
+	                            <td>{{{ $maxquestions }}} ...</td>
+	                            <td><input type="checkbox" name="connect[]" value="{{$assignment->id}}"></td>
+	                        </tr>
+	                        @endforeach
+	                        </tdbody>
+	                    </table>
+						{!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
+						{!! Form::close() !!}
+	                </div>
+	            </div>
             </div>
         </div>
     </div>

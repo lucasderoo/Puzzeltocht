@@ -77,7 +77,7 @@ td{
 .radiobuts{
     width: 14px;
     float: right;
-    margin-top: 175px;
+    margin-top: 226px;
     margin-left: 10px;
 }
 .radiobuts input{
@@ -99,40 +99,55 @@ td{
     margin-top: 32px;
 }
 .questionI{
-    margin-top: 32px;
+    margin-top: 44px;
 }
 .answersL{
-    margin-top: 32px;
-}
-.locationI{
-    margin-top: 32px;
+    margin-top: 15px;
 }
 .answersI {
-    margin-top: 32px;
+    margin-top: 53px;
 }
-.questionI label{
-    margin-top: 32px;
+.questionL label{
+    margin-top: 15px;
 }
 .answersL label{
     margin-top: 15px;
 }
-.locationI label{
+.locationL label{
     margin-top: 15px;
 }
 .newquestion{
     float: left;
     width: 100px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .newinputs{
     margin-top: 10px;
 }
 .locationI{
-    margin-top: 30px;
+    margin-top: 51px;
 }
-textarea{
+.formlabes{
+    margin-top: 20px;
+}
+.textarea{
+    max-height: 45px;
     height: 45px;
-    width: 351px
+    max-width: 351px;
+    width: 100%;
+}
+.verplicht{
+    display: inline;
+}
+.topform{
+    height: 30px;
+}
+.topform p{
+    float: left;
+}
+.topform a{
+    float: right;
 }
 </style>
 @section('content')
@@ -145,21 +160,24 @@ textarea{
                     <div class="underlineH1"></div>
                     <div class="newassignment">
                         {!! Form::open(['method' => 'post', 'url' => '/home/opdrachten/store/' . $tripid .'/'.$prevurl]) !!}
+                        <div class="topform">
                             <p> * zijn verplicht</p>
+                            <a href="/home/tochten/{{$prevurl}}/{{$tripid}}" class="btn btn-primary">Terug</a>
+                        </div>
                         <div class="newquestion">
-                            <p>Opdracht:</p>
+                            <h4>Opdracht:</h4>
                             <div class="questionL">
-                                <label for="type">Type:</label><br>
-                                <label for="title">Titel:</label><br>
-                                <label for="question">Vraag:</label><br>
+                                <label for="type">Type:*</label><br>
+                                <label for="title">Titel:*</label><br>
+                                <label for="question">Vraag:*</label><br>
                             </div>
-                            <p>Antwoorden:</p>
+                            <h4 class="formlabes">Antwoorden:</h4>
                             <div class="answersL">
-                                <label for="answer_1">Antwoord 1:</label><br>
-                                <label for="answer_2">Antwoord 2:</label><br>
-                                <label for="answer_3">Antwoord 3:</label><br>
+                                <label for="answer_1">Antwoord 1:*</label><br>
+                                <label for="answer_2">Antwoord 2:*</label><br>
+                                <label for="answer_3">Antwoord 3:*</label><br>
                             </div>
-                            <p>Locatie:</p>
+                            <h4 class="formlabes">Locatie:</h4>
                             <div class="locationL">
                                 <label for="longitude">Longitude:</label><br>
                                 <label for="latitude">Latitude:</label>
@@ -174,7 +192,7 @@ textarea{
                                     <option value="Type4">Type4</option>
                                 </select>
                                 <input question="" maxlength="100" required="required" name="title" type="text" id="title"><br>
-            <textarea rows="2" question="" maxlength="100" required="required" name="question" id="question"></textarea><br>
+            <textarea rows="2" class="textarea" maxlength="100" required="required" name="question" id="question"></textarea><br>
                             </div>
                             <div class="answersI">
                                 <input question="" maxlength="100" required="required" name="answer_1" type="text" id="answer_1"><br>                         
