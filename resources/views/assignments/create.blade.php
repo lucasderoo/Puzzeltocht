@@ -48,6 +48,7 @@ td{
     padding: 10px;
 }
 .newassignment{
+    float: left;
     width: 474px;
     margin: auto;
     margin-top: 10px;
@@ -209,6 +210,7 @@ td{
                             <input name="correct_answer" type="radio" value="answer_2">
                             <input name="correct_answer" type="radio" value="answer_3">
                         </div>
+                    </div>
                     {!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
                     {!! Form::close() !!}
                 </div>

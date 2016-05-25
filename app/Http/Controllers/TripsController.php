@@ -15,26 +15,26 @@ use App\Http\Requests;
 
 	function Auth(){
 	  if (Auth::guest()) {
-	    echo '<script>window.location.href = "/login?error=login";</script>';
+	    //echo '<script>window.location.href = "/login?error=login";</script>';
 	  }
 	  elseif (Auth::user()->role == '2') {
-	    echo '<script>window.location.href = "/home";</script>';
+	   // echo '<script>window.location.href = "/home";</script>';
 	  }
 	  elseif (Auth::user()->role == '3') {
-	    echo '<script>window.location.href = "/home";</script>';
+	   // echo '<script>window.location.href = "/home";</script>';
 	  }
 	}
 
 
     function isStudent(){
       if (Auth::user()->role != 'inactive') {
-         echo '<script>window.location.href = "/login?error=login";</script>';
+       //  echo '<script>window.location.href = "/login?error=login";</script>';
       }
     }
 
     function isLoggedIn(){
       if (Auth::guest()) {
-        echo '<script>window.location.href = "/login?error=login";</script>';
+        //echo '<script>window.location.href = "/login?error=login";</script>';
       }
     }
 
@@ -45,7 +45,7 @@ class TripsController extends Controller
    		isLoggedIn();
    		Auth();
 		$trips = DB::table('trips')->get();
-		$assignments = DB::table('tripsassignments')->pluck('tripids');
+		//$assignments = DB::table('tripsassignments')->pluck('tripids');
 		return view('trips.index', compact('trips','assignments'));
 	} 	
 	public function wait(){
@@ -66,14 +66,23 @@ class TripsController extends Controller
 
 	  $name = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
 
+	  $actives = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('active');
+
+
+
 	  $ids = implode(',', $name);
+
+	  //return $ids;
 
 	  if ($ids == ""){
 	  	$assignments = "";
 	  }
 	  else{
-	  	$assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
+		$assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
 	  }
+      foreach($actives as $key => $value) { 
+  		$assignments[$key]->active = $value; 
+  	  }
 
 	  return view('trips.create',compact('assignments','tripid'));
 	}
@@ -156,10 +165,16 @@ class TripsController extends Controller
 
 	  $name = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
 
+	  $actives = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('active');
+
 	  $ids = implode(',', $name);
 
 	  $assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
-	  
+
+	  foreach($actives as $key => $value) { 
+	  	$assignments[$key]->active = $value; 
+	  }
+
 	  return view('trips.edit',compact('assignments','tripid','tripname'));
 	}
 	/**
@@ -183,8 +198,13 @@ class TripsController extends Controller
 	{
 	  isLoggedIn();
 	  Auth();
-	  Trips::find($id)->delete();
-	  $assignments = DB::select( DB::raw("DELETE FROM tripsassignments WHERE tripids = $id") );
-	  return redirect('/home/tochten');
+	  if (Auth::user()->role == '1'){
+	  	Trips::find($id)->delete();
+	 	$assignments = DB::select( DB::raw("DELETE FROM tripsassignments WHERE tripids = $id") );
+	  	return redirect('/home/tochten');
+	  }
+	  else{
+	  	return "Mag niet";
+	  }
 	}
 }
