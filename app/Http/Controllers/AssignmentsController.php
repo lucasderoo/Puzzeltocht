@@ -15,24 +15,29 @@ use Illuminate\Support\Facades\Redirect;
 
 function Auth(){
     if (Auth::guest()) {
-      echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
+      //echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
+      //header ("Location: login");
     }
     elseif (Auth::user()->role == '2') {
-      echo '<script>window.location.href = "home/;</script>';
+      //echo '<script>window.location.href = "home/;</script>';
+      //header ("Location: login");
     }
     elseif (Auth::user()->role == '3') {
-      echo '<script>window.location.href = "home";</script>';
+      //echo '<script>window.location.href = "home";</script>';
+      //header ("Location: login");
     }
   }
     function isStudent(){
       if (Auth::user()->role != 'inactive') {
-         echo '<script>window.location.href = "home";</script>';
+        // echo '<script>window.location.href = "home";</script>';
+        //header ("Location: login");
       }
     }
 
     function isLoggedIn(){
       if (Auth::guest()) {
-        echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
+        //echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
+        //header ("Location: login");
       }
     }
 class AssignmentsController extends Controller
@@ -187,18 +192,21 @@ class AssignmentsController extends Controller
     return redirect('/home/tochten/'.$prevurl.'/' .$tripid);
   }
 
-  public function active($id)
+  public function active($id ,$tripid)
   {
     isLoggedIn();
     Auth();
-    $assignments = Assignments::find($id);
-    if($assignments->active == "Y"){
-      DB::table('assignments')->where('id', $id)->update(['active' => "N"]); 
+
+    $assignments = DB::select( DB::raw("SELECT * FROM tripsassignments WHERE tripids = $tripid AND assignmentsids = $id") );
+    foreach ($assignments as $assignment) {
+      if($assignment->active == "Y"){
+        $assignments = DB::select( DB::raw("UPDATE tripsassignments SET active = 'N' WHERE tripids = $tripid AND assignmentsids = $id") );
+      }
+      else{
+       $assignments = DB::select( DB::raw("UPDATE tripsassignments SET active = 'Y' WHERE tripids = $tripid AND assignmentsids = $id") );
+      }
+      return redirect()->back();
     }
-    else{
-      DB::table('assignments')->where('id', $id)->update(['active' => "Y"]);
-    }
-    return redirect()->back();  
   }
   public function connect($tripid){
 
@@ -214,13 +222,11 @@ class AssignmentsController extends Controller
     }
 
     $assignments = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
-
-    $assignments = implode(',', $assignments);
-
-    if(empty($assignments)){
-    $assignments = array();
+    if (empty($assignments)){
+      $assignments = DB::select(DB::raw("SELECT * FROM assignments WHERE id NOT IN ('')")); 
     }
     else{
+      $assignments = implode(',', $assignments);
       $assignments = DB::select(DB::raw("SELECT * FROM assignments WHERE id NOT IN ($assignments)")); 
     }
     return view('assignments.connect',compact('assignments','tripid','prevurl'));

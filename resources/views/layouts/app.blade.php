@@ -18,8 +18,8 @@
     <link href="css/topnavbar.css" rel='stylesheet' type='text/css'>
     <link href="/css/login.css" rel='stylesheet' type='text/css'>
     <link href="/css/simple-sidebar.css" rel="stylesheet">
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="/css/tables.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
@@ -79,7 +79,7 @@
             @elseif (Auth::user()->role == '2')
             <li class="sidebar-brand">
                 <a href="/home">
-                    Puzzeltocht
+                    Puzzeltocht (SUPERUSER)
                 </a>
             </li>
             <li>
@@ -87,11 +87,14 @@
             </li>
             <li>
                 <a href="/logout">Logout</a>
+            </li>
+            <li>
+                <a href="/home/starttrip">Tochten</a>
             </li>   
             @elseif (Auth::user()->role == '3')
             <li class="sidebar-brand">
                 <a href="/home">
-                    Puzzeltocht
+                    Puzzeltocht (DEELNEMER)
                 </a>
             </li>
             <li>
@@ -99,7 +102,10 @@
             </li>
             <li>
                 <a href="/logout">Logout</a>
-            </li>       
+            </li>
+            <li>
+                <a href="/home/starttrip">Speel tochten</a>
+            </li>        
             @endif
             </ul>
         </div>

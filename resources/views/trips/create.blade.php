@@ -9,7 +9,7 @@
             <div class="tripnameinput">
                 {!! Form::open(['method' => 'post', 'url' => '/home/tochten/store/'. $tripid]) !!}
                 <label>Tochtnaam:</label>
-                <input type="text" name="">
+                <input type="text" name="tripname" required>
             </div>
             <div class="underlineH1"></div>
             <div class="divbuttons">
@@ -66,7 +66,7 @@
                             $classname = "btn btn-success";
                         }
                     ?>
-                    <td><a class="{{{ $classname }}}" href="{{url('/home/opdrachten/active',$assignment->id)}}">{{{ $text }}}</a></td>
+                <td><a class="{{{ $classname }}}" href="/home/opdrachten/active/{{$assignment->id}}/{{$tripid}}">{{{ $text }}}</a></td>
                 </tr>
                 @endforeach
                 </tdbody>

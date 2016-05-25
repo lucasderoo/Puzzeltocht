@@ -127,10 +127,9 @@ table{
                                         $classname = "btn btn-success";
                                     }
                                 ?>
-                                <td><a class="{{{ $classname }}}" href="/home/opdrachten/active/{{$assignment->id}}">{{{ $text }}}</a></td>
-                            </tr>
-                            @endforeach
+                                <td><a class="{{{ $classname }}}" href="/home/opdrachten/active/{{$assignment->id}}/{{$tripid}}">{{{ $text }}}</a></td>
                             </tdbody>
+                            @endforeach
                     </table>
                     <?php endif; ?>
                     </div>    
