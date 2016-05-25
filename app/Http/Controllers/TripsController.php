@@ -15,26 +15,26 @@ use App\Http\Requests;
 
 	function Auth(){
 	  if (Auth::guest()) {
-	    //echo '<script>window.location.href = "/login?error=login";</script>';
+	    echo '<script>window.location.href = "/login?error=login";</script>';
 	  }
 	  elseif (Auth::user()->role == '2') {
-	   // echo '<script>window.location.href = "/home";</script>';
+	    echo '<script>window.location.href = "/home";</script>';
 	  }
 	  elseif (Auth::user()->role == '3') {
-	   // echo '<script>window.location.href = "/home";</script>';
+	    echo '<script>window.location.href = "/home";</script>';
 	  }
 	}
 
 
     function isStudent(){
       if (Auth::user()->role != 'inactive') {
-       //  echo '<script>window.location.href = "/login?error=login";</script>';
+         echo '<script>window.location.href = "/login?error=login";</script>';
       }
     }
 
     function isLoggedIn(){
       if (Auth::guest()) {
-        //echo '<script>window.location.href = "/login?error=login";</script>';
+        echo '<script>window.location.href = "/login?error=login";</script>';
       }
     }
 
@@ -45,7 +45,12 @@ class TripsController extends Controller
    		isLoggedIn();
    		Auth();
 		$trips = DB::table('trips')->get();
-		//$assignments = DB::table('tripsassignments')->pluck('tripids');
+		foreach ($trips as $trip) {
+			if($trip->assignments == ""){
+				DB::select( DB::raw("DELETE FROM tripsassignments WHERE tripids = $trip->id") );
+				Trips::find($trip->id)->delete();
+			}
+		}
 		return view('trips.index', compact('trips','assignments'));
 	} 	
 	public function wait(){

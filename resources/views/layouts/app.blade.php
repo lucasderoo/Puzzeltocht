@@ -71,6 +71,9 @@
                 <a href="/home/opdrachten">Opdrachten</a>
             </li>
             <li>
+                <a href="/home/starttrip">Start tocht</a>
+            </li>
+            <li>
                 <a href="/logout">Logout</a>
             </li>
             <li>

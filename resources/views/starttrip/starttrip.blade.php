@@ -31,7 +31,8 @@
  <?php if($i==1){?>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div id='question<?php echo $i;?>' class='cont'>
-            <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo $assignment->question;?></p>
+            <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
+            <p><?php echo $assignment->question;?></p>
             <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
            <br/>
             <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>
@@ -43,7 +44,8 @@
             </div>     
              <?php }elseif($i<1 || $i<$count){?>
             <div id='question<?php echo $i;?>' class='cont'>
-              <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $assignment->question;?></p>
+              <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
+              <p><?php echo $assignment->question;?></p>
               <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
               <br/>
               <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>
@@ -56,7 +58,8 @@
             </div>
            <?php }elseif($i==$count){?>
             <div id='question<?php echo $i;?>' class='cont'>
-              <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $assignment->question;?></p>
+              <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
+              <p><?php echo $assignment->question;?></p>
               <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
               <br/>
               <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>

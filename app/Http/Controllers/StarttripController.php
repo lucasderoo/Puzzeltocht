@@ -13,10 +13,35 @@ use App\Assignments;
 use App\Tripsassignments;
 use App\Http\Requests;
 
+function Auth(){
+	  if (Auth::guest()) {
+	    echo '<script>window.location.href = "/login?error=login";</script>';
+	  }
+	  elseif (Auth::user()->role == '2') {
+	    echo '<script>window.location.href = "/home";</script>';
+	  }
+	  elseif (Auth::user()->role == '3') {
+	    echo '<script>window.location.href = "/home";</script>';
+	  }
+	}
+
+    function isStudent(){
+      if (Auth::user()->role != 'inactive') {
+         echo '<script>window.location.href = "/login?error=login";</script>';
+      }
+    }
+
+    function isLoggedIn(){
+      if (Auth::guest()) {
+        echo '<script>window.location.href = "/login?error=login";</script>';
+      }
+    }
 class StarttripController extends Controller
 {
     public function index()
     {
+    	isLoggedIn();
+   		Auth();
     	$trips = DB::table('trips')->get();
 		if (Auth::user()->role == '1') {
 			return view('starttrip.index', compact('trips','assignments'));
@@ -26,7 +51,9 @@ class StarttripController extends Controller
 		}
 	} 
 	public function starttrip($tripid){
-		$trips = Trips::find($tripid);
+	  isLoggedIn();
+   	  Auth();
+	  $trips = Trips::find($tripid);
 	  $tripname = $trips->tripname;
 
 	  $assignments = DB::table('assignments')->get();
@@ -49,6 +76,8 @@ class StarttripController extends Controller
 	}
 	public function teamoverview($tripid)
     {
+      isLoggedIn();
+   	  Auth();
 	  $trips = Trips::find($tripid);
 	  $tripname = $trips->tripname;
 
@@ -63,28 +92,41 @@ class StarttripController extends Controller
 	} 
 	public function createteams($tripid)
 	{
+		isLoggedIn();
+   	    Auth();
 		$users = DB::table('users')->where('role', '3')->get();
 		return view('starttrip.createteam', compact('tripid','users'));
 	}
 	public function storeteams($tripid)
 	{
-    $userids = $_POST['connect'];
-    $newteam=Request::all();
-    $newteam = Teamsusers::create([
-        'teamname' => $newteam['teamname'],
-    ]);
+		isLoggedIn();
+	   	Auth();	
+	    $userids = $_POST['connect'];
+	    $newteam=Request::all();
+	    $newteam = Teamsusers::create([
+	        'teamname' => $newteam['teamname'],
+	    ]);
 	}
 
 	public function tripresult($tripid)
 	{
-   foreach($_POST as $key => $val) {
-        if(!is_int($key)){
+	isLoggedIn();
+   	Auth();
 
+   	$count = count($_POST);
+
+   	if($count < "2"){
+   		return "Niks ingevuld!";
+   	}
+
+    foreach($_POST as $key => $val) {
+        if(!is_int($key)){
         }  
         else{
         	$order[] = $key;
         }
     }
+
 
     unset($_POST['_token']);
 

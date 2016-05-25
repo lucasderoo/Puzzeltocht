@@ -15,29 +15,24 @@ use Illuminate\Support\Facades\Redirect;
 
 function Auth(){
     if (Auth::guest()) {
-      //echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
-      //header ("Location: login");
+      echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
     }
     elseif (Auth::user()->role == '2') {
-      //echo '<script>window.location.href = "home/;</script>';
-      //header ("Location: login");
+      echo '<script>window.location.href = "home/;</script>';
     }
     elseif (Auth::user()->role == '3') {
-      //echo '<script>window.location.href = "home";</script>';
-      //header ("Location: login");
+      echo '<script>window.location.href = "home";</script>';
     }
   }
     function isStudent(){
       if (Auth::user()->role != 'inactive') {
-        // echo '<script>window.location.href = "home";</script>';
-        //header ("Location: login");
+        echo '<script>window.location.href = "home";</script>';
       }
     }
 
     function isLoggedIn(){
       if (Auth::guest()) {
-        //echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
-        //header ("Location: login");
+        echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
       }
     }
 class AssignmentsController extends Controller
