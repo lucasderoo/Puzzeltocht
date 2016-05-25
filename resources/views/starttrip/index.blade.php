@@ -91,7 +91,7 @@ td{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 middiv">
-                <h1>Deze tochten kun jij starten</h1>
+                <h1>Welke tocht wil jij starten?</h1>
                 <div class="underlineH1"></div>
                 <div class="top-table">
                     <table class="table table-striped midtable">
