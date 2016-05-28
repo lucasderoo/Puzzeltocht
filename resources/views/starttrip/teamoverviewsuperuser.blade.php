@@ -13,6 +13,7 @@ h3{
             <div class="col-lg-12 middiv">
            	<table class="table-striped midtable">
            		<h3>Teams voor "{{ $tripname }}"</h3>
+           		<a href="/home/starttrip/newtripsession/{{$tripid}}" class="btn btn-success">Start Tocht</a>
                 <tr>
                     <th>Teamnaam</th>
                     <th>Aantal deelnemers</th>

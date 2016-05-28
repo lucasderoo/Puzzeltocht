@@ -91,13 +91,13 @@ td{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 middiv">
-                <h1>Welke tocht wil jij starten?</h1>
+                <h1>Tochten die kunt doen</h1>
                 <div class="underlineH1"></div>
                 <div class="top-table">
                     <table class="table table-striped midtable">
                     <thead>
                       <tr>
-                        <th>Tochtnaam</th>
+                        <th>Tripnaam</th>
                         <th>Aantal opdrachten</th>
                         <th>Start tocht</th>
                       </tr>
@@ -107,7 +107,7 @@ td{
                         <tr class='clickable-row DataTR' data-href="/home/tochten/show/{{$trip->id}}">
                             <td>{{ $trip->tripname }}</td>
                             <td>{{ $trip->assignments }}</td>
-                            <td><a href="starttrip/newsession/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
+                            <td><a href="starttrip/teamoverview/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
                         </tr>
                     @endforeach
                     </tbody>

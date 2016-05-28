@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tripsassignments extends Model
+class Tripsessions extends Model
 {
-    protected $fillable=[
+     protected $fillable=[
 		'tripid',
     ];
     protected $table = 'tripsessions';

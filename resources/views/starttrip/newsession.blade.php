@@ -1,0 +1,1 @@
+<?php header('Location: http://puzzeltocht.dev/home/starttrip/teamoverview/'.$tripid); ?>

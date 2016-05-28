@@ -9,6 +9,8 @@ class Teamsusers extends Model
     protected $fillable=[
 		'teamids',
 		'userids',
+		'tripids',
+		'score',
     ];
     protected $table = 'teamsusers';
 }

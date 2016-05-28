@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 middiv">
-            {!! Form::open(['method' => 'post', 'url' => '/home/starttrip/storeteam/' . $tripid]) !!}
+            {!! Form::open(['method' => 'post', 'url' => '/home/starttrip/storeteams/' . $tripid]) !!}
             <label for="teamname">Teamnaam:</label>
             <input  maxlength="100" name="teamname" type="text">
             <table class="table-striped midtable">

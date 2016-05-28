@@ -14,6 +14,11 @@ h3{
            	<table class="table-striped midtable">
            		<h3>Teams voor "{{ $tripname }}"</h3>
                 <a href="/home/starttrip/createteams/{{$tripid}}" class="btn btn-success">Nieuw team</a>
+                @if($starttripbutton == "ok")
+                    <a href="/home/starttrip/start/{{$tripid}}" class="btn btn-success">Start de tocht!</a>
+                @else
+                    <a href="#" class="btn btn-danger">Tocht is nog niet open gezet</a>
+                @endif
                 <tr>
                     <th>Teamnaam</th>
                     <th>Aantal deelnemers</th>
