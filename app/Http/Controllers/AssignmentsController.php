@@ -37,6 +37,8 @@ function Auth(){
     }
 class AssignmentsController extends Controller
 {
+
+  
   public function index()
   {
     isLoggedIn();
@@ -44,6 +46,8 @@ class AssignmentsController extends Controller
     $assignments = DB::table('assignments')->get();
     return view('assignments.index',compact('assignments'));
   }
+
+
   public function create($tripid)
   {
     isLoggedIn();
@@ -65,6 +69,8 @@ class AssignmentsController extends Controller
   *
   * @return Response
   */
+
+
   public function store($tripid, $prevurl)
   {
     isLoggedIn();
@@ -96,6 +102,8 @@ class AssignmentsController extends Controller
   * @return Response
   */
   }
+
+
   public function show($id, $tripid)
   {
     isLoggedIn();
@@ -122,6 +130,8 @@ class AssignmentsController extends Controller
   * @param  int  $id
   * @return Response
   */
+
+
   public function edit($id, $tripid)
   {
     isLoggedIn();
@@ -145,6 +155,8 @@ class AssignmentsController extends Controller
   * @param  int  $id
   * @return Response
   */
+
+
   public function update($id, $tripid, $prevurl)
   {
     isLoggedIn();
@@ -155,6 +167,8 @@ class AssignmentsController extends Controller
     //header('Location: http://puzzeltocht.dev/Puzzeltocht4/public/home/tochten/'.$prevurl.'/' .$tripid);
     return redirect('/home/tochten/'.$prevurl.'/' .$tripid);
   }
+
+
   public function delete($id, $tripid)
   {
     isLoggedIn();
@@ -173,6 +187,7 @@ class AssignmentsController extends Controller
     return view('assignments.delete',compact('assignment','tripid','id','prevurl'));
   }
 
+
   public function destroy($id, $tripid, $prevurl)
   {
     isLoggedIn();
@@ -186,6 +201,7 @@ class AssignmentsController extends Controller
     //header('Location: http://puzzeltocht.dev/Puzzeltocht4/public/home/tochten/'.$prevurl.'/' .$tripid); 
     return redirect('/home/tochten/'.$prevurl.'/' .$tripid);
   }
+
 
   public function active($id ,$tripid)
   {
@@ -203,6 +219,8 @@ class AssignmentsController extends Controller
       return redirect()->back();
     }
   }
+
+
   public function connect($tripid){
 
     $prevurl = $_SERVER['HTTP_REFERER'];
@@ -226,6 +244,8 @@ class AssignmentsController extends Controller
     }
     return view('assignments.connect',compact('assignments','tripid','prevurl'));
   }
+
+
   public function connectassignments($tripid, $prevurl)
   {
     isLoggedIn();

@@ -42,14 +42,13 @@ function Auth(){
     }
 class StarttripController extends Controller
 {
+
+
     public function index()
     {
     	//isLoggedIn();
    		//Auth();
     	$trips = DB::table('trips')->get();
-
-
-
 
 		if (Auth::user()->role == '2') {
 		  	return view('starttrip.index', compact('trips'));
@@ -75,33 +74,57 @@ class StarttripController extends Controller
 		  }
 		
 	} 
+
+
 	public function starttrip($tripid){
 	  //isLoggedIn();
    	  //Auth();
 	  $trips = Trips::find($tripid);
 	  $tripname = $trips->tripname;
 
+	  $tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
+
 	  $assignments = DB::table('assignments')->get();
 
 	  $name = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
 
-	  $ids = implode(',', $name);
+	  $user =  Auth::user();
 
-	  $assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
+	  $userid = $user->id;
 
-	  $count = count($assignments);
+	  $userid = "$userid";
 
-	  for ($i=1; $i <= $count; $i++) { 
-	  		$order[] = $i;
-	  }
-	  foreach($order as $key => $value) { 
-  		$assignments[$key]->order = $value; 
-  	  }
+	  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
 
-  	  if (Auth::user()->role == '3') {
-	  	return view('starttrip.starttrip', compact('tripname','assignments','order','count','tripid'));
-	  }
+		if (in_array($tripid, $tripsessions)) {
+		  if (in_array($userid, $inteam)) {
+		  	$ids = implode(',', $name);
+
+		  	$assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
+
+			$count = count($assignments);
+
+			for ($i=1; $i <= $count; $i++) { 
+			  		$order[] = $i;
+			}
+			foreach($order as $key => $value) { 
+		      $assignments[$key]->order = $value; 
+		  	}
+
+		  	if (Auth::user()->role == '3') {
+			  return view('starttrip.starttrip', compact('tripname','assignments','order','count','tripid'));
+		  	}
+		  }
+		  else{
+		  	return "Hey! dat mag niet!";
+		  }
+		}
+		else{
+			return "Hey! dat mag niet!";
+		}
 	}
+
+
 	public function newsession($tripid){
 	  //isLoggedIn();
    	 // Auth();
@@ -119,6 +142,8 @@ class StarttripController extends Controller
   	  }
 	  return view('starttrip.newsession', compact('tripid'));
 	}
+
+
 	public function newtripsession($tripid){
 	  $tripsessions = DB::table('tripsessions')->pluck('tripid');
    	  if (in_array($tripid, $tripsessions)) {
@@ -134,6 +159,8 @@ class StarttripController extends Controller
   	  }
 	  return "tocht gestart doei";
 	}
+
+
 	public function teamoverview($tripid)
     {
       //isLoggedIn();
@@ -149,6 +176,20 @@ class StarttripController extends Controller
    	  	$starttripbutton = "no";
    	  }
 
+	  $user =  Auth::user();
+
+	  $userid = $user->id;
+
+	  $userid = "$userid";
+
+	  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
+	  if (in_array($userid, $inteam)) {
+	  	$starttripbutton = "ok";
+	  }
+	  else{
+	  	$starttripbutton = "no";
+	  }
 
    	  if (in_array($tripid, $sessions)) {
 		  $trips = Trips::find($tripid);
@@ -171,24 +212,52 @@ class StarttripController extends Controller
 		return "HEY! dat mag niet!";
 	  }
 	} 
+
+
 	public function createteams($tripid)
 	{
 		//isLoggedIn();
 		$sessions = DB::table('sessions')->pluck('tripid');
 		if (in_array($tripid, $sessions)){
-			$users = DB::table('users')->where('role', '3')->get();
-			return view('starttrip.createteam', compact('tripid','users'));
+			$user =  Auth::user();
+
+		    $userid = $user->id;
+
+		    $userid = "$userid";
+
+		    $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
+		    if (in_array($userid, $inteam)) {
+			  return "je zit al in een team!";
+			}
+		  	else{
+		  		$users = DB::select(DB::raw("SELECT * FROM users WHERE id NOT IN ($userid) AND role = '3'"));  
+				return view('starttrip.createteam', compact('tripid','users'));
+		  	}
 		}
 		else{
 			return "HEY! dat mag niet!";
 		}
 	}
+
+
 	public function storeteams($tripid)
 	{
 		//isLoggedIn();
 	   	//Auth();	
+
+
+
+	   	 $user =  Auth::user();
+
+	  	$userid = $user->id;
+
+	  	$userid = "$userid";
+
+
 	    $userids = $_POST['connect'];
 
+	   	array_push($userids, $userid);
 
 	    $teamsize = count($userids);
 
@@ -207,6 +276,7 @@ class StarttripController extends Controller
         }
     	return redirect('/home/starttrip/teamoverview/' .$tripid);
 	}
+
 
 	public function tripresult($tripid)
 	{
@@ -281,7 +351,6 @@ class StarttripController extends Controller
    	echo 'goede antwoorden:' . $good . '<br>';
    	echo 'foute antwoorden:' . $wrong . '<br>';
    	echo 'Niet ingevulde antwoorden:' . $noanswer;
-
 }
 }
 

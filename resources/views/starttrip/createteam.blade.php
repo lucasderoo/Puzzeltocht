@@ -13,16 +13,17 @@
             <table class="table-striped midtable">
                 <tr>
                     <th>Naam:</th>
+                    <th>Koppel:</th>
                 </tr>
             <tbody>
             @foreach($users as $user)
             <tr>
-            	<th>{{ $user->name }}</th>
+            	<td>{{ $user->name }}</td>
             	<td><input type="checkbox" name="connect[]" value="{{$user->id}}"></td>
             </tr>
             </tbody>
-            </table>
             @endforeach
+            </table>
             {!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
             {!! Form::close() !!}
             </div>
