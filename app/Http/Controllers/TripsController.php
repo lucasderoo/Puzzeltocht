@@ -199,6 +199,8 @@ class TripsController extends Controller
 		$trip = Trips::find($id);
 		return view('trips.delete',compact('trip','id'));
 	}
+
+	
 	public function destroy($id)
 	{
 	  isLoggedIn();

@@ -79,49 +79,111 @@ class StarttripController extends Controller
 	public function starttrip($tripid){
 	  //isLoggedIn();
    	  //Auth();
-	  $trips = Trips::find($tripid);
-	  $tripname = $trips->tripname;
+	  if (Auth::user()->role == '3') {
+		  $trips = Trips::find($tripid);
+		  $tripname = $trips->tripname;
 
-	  $tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
+		  $tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 
-	  $assignments = DB::table('assignments')->get();
+		  $assignments = DB::table('assignments')->get();
 
-	  $name = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
+		  $tripsassignments = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
 
-	  $user =  Auth::user();
+		  $user =  Auth::user();
 
-	  $userid = $user->id;
+		  $userid = $user->id;
 
-	  $userid = "$userid";
+		  $userid = "$userid";
 
-	  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+		  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
 
-		if (in_array($tripid, $tripsessions)) {
-		  if (in_array($userid, $inteam)) {
-		  	$ids = implode(',', $name);
+		  if (in_array($tripid, $tripsessions)) {
+			  if (in_array($userid, $inteam)) {
+			  	$ids = implode(',', $tripsassignments);
 
-		  	$assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
+			  	$assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
 
-			$count = count($assignments);
+				$count = count($assignments);
 
-			for ($i=1; $i <= $count; $i++) { 
-			  		$order[] = $i;
+				for ($i=1; $i <= $count; $i++) { 
+				  		$order[] = $i;
+				}
+				foreach($order as $key => $value) { 
+			      $assignments[$key]->order = $value; 
+			  	}
+
+			  	if (Auth::user()->role == '3') {
+				  return view('starttrip.starttripuser', compact('tripname','assignments','order','count','tripid'));
+			  	}
+			  }
+			  else{
+			  	return "Hey! dat mag niet!";
+			  }
 			}
-			foreach($order as $key => $value) { 
-		      $assignments[$key]->order = $value; 
-		  	}
-
-		  	if (Auth::user()->role == '3') {
-			  return view('starttrip.starttrip', compact('tripname','assignments','order','count','tripid'));
-		  	}
-		  }
-		  else{
-		  	return "Hey! dat mag niet!";
-		  }
+			else{
+				return "Hey! dat mag niet!";
+			}
+		}
+		elseif(Auth::user()->role == '2') {
+			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
+			if (in_array($tripid, $tripsessions)) {
+				$teams = DB::table('teams')
+					->join('teamsusers', 'id', '=', 'teamsusers.teamids')
+					->join('users', 'userids', '=', 'users.id')
+					->where('teamsusers.tripids', '=', $tripid)
+					->get();
+					return view('starttrip.starttripsuperuser', compact('tripid','teams')); 
+			}
 		}
 		else{
 			return "Hey! dat mag niet!";
 		}
+	}
+
+
+	public function stoptrip($tripid){
+		if (Auth::user()->role == '2') {
+			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid');
+			if (in_array($tripid, $tripsessions)) {
+				DB::table('tripsessions')->where('tripid', '=', $tripid)->delete();
+				return redirect('/home/starttrip/teamoverview/'. $tripid); 
+			}
+			else{
+				return "Hey! dat mag niet!";
+			}
+		}
+		elseif(Auth::user()->role == "3"){
+		  $user =  Auth::user();
+
+		  $userid = $user->id;
+
+		  $userid = "$userid";
+
+		  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
+		  return DB::table('teamsusers')
+            ->where('tripids', '=', $tripid)
+            ->where('userids', '=', $userid)
+            ->get();
+
+		  $tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
+		  if (in_array($tripid, $tripsessions)) {
+		  	if (in_array($userid, $inteam)) {
+		  		return redirect('/home/starttrip/teamoverview/'. $tripid);
+		 	}
+		  }
+
+		}
+		else{
+			return "Hey dat mag niet!";
+		}
+
+
+
+
+
+
+
 	}
 
 
@@ -157,7 +219,7 @@ class StarttripController extends Controller
         	'tripid' => $tripid,
       	]);
   	  }
-	  return "tocht gestart doei";
+	  return view('starttrip.newtripsession', compact('tripid'));
 	}
 
 
@@ -183,6 +245,8 @@ class StarttripController extends Controller
 	  $userid = "$userid";
 
 	  $inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
+
 
 	  if (in_array($userid, $inteam)) {
 	  	$starttripbutton = "ok";
@@ -246,14 +310,11 @@ class StarttripController extends Controller
 		//isLoggedIn();
 	   	//Auth();	
 
-
-
-	   	 $user =  Auth::user();
+	   	$user =  Auth::user();
 
 	  	$userid = $user->id;
 
 	  	$userid = "$userid";
-
 
 	    $userids = $_POST['connect'];
 
@@ -296,7 +357,6 @@ class StarttripController extends Controller
         	$order[] = $key;
         }
     }
-
 
     unset($_POST['_token']);
 
