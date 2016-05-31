@@ -73,8 +73,6 @@ class TripsController extends Controller
 
 	  $actives = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('active');
 
-
-
 	  $ids = implode(',', $name);
 
 	  //return $ids;
@@ -200,7 +198,7 @@ class TripsController extends Controller
 		return view('trips.delete',compact('trip','id'));
 	}
 
-	
+
 	public function destroy($id)
 	{
 	  isLoggedIn();

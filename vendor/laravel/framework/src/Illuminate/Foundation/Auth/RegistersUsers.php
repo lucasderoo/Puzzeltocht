@@ -61,7 +61,7 @@ trait RegistersUsers
     }
 
     // Commenting this line should help.
-    //Auth::login($this->create($request->all())); 
+    Auth::login($this->create($request->all())); 
 
     return redirect($this->redirectPath());
 }
