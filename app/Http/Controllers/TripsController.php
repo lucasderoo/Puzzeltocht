@@ -209,7 +209,7 @@ class TripsController extends Controller
 	  	return redirect('/home/tochten');
 	  }
 	  else{
-	  	return "Mag niet";
+	  	return "Hey! dat mag niet!";
 	  }
 	}
 }

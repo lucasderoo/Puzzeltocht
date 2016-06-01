@@ -105,6 +105,7 @@ td{
                     <tbody>
                     @foreach ($trips as $trip)
                         <tr class='clickable-row DataTR' data-href="/home/tochten/show/{{$trip->id}}">
+                        
                             <td>{{ $trip->tripname }}</td>
                             <td>{{ $trip->assignments }}</td>
                             <td><a href="/home/starttrip/newsession/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>

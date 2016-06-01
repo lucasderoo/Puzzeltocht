@@ -23,7 +23,7 @@
     <link href="/css/tables.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
     <style>
@@ -36,80 +36,110 @@
         a{
             text-decoration: none !important;
         }
+        .jumbotron{
+            background-color:#2E2D88;
+            color:white;
+        }
+
+        .form-control {
+             width: 60%;
+             margin-bottom: 5px; 
+        }
+
+        .button{
+            width: 100%;
+            float: left;
+        }
+
+        .navbar
+        {
+          border-radius: 0 !important;
+        }
+
+        .button h1{
+            float: left;
+        }
+
+        .tocht{
+            float: right;
+            padding-bottom: 9px;
+            margin: 25px 0 20px;
+            margin-bottom: 10;
+        }
+
+        .navbar-default{
+          background-color: #337ab7;
+          border-color: #2e6da4;
+        }
+
+        .navbar-default .navbar-brand {
+          color: #fff;
+        }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+          color: #5E5E5E;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-toggle {
+          border-color: #fff
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+        .tocht {
+            float: right;
+            padding-bottom: 9px;
+            margin: 25px 0 20px;
+            margin-bottom: 10;
+        }
     </style>
 </head>
 <body id="app-layout">
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-            @if (Auth::guest())
-            <li class="sidebar-brand">
-                <a href="/home">
-                    Puzzeltocht
-                </a>
-            </li>
-            <li>
-                <a href="/login">Login</a>
-            </li>
-            <li>
-                <a href="/home">Home</a>
-            </li>
-            @elseif (Auth::user()->role == '1')
-            <li class="sidebar-brand">
-                <a href="/home">
-                    Puzzeltocht (ADMIN)
-                </a>
-            </li>
-            <li>
-                <a href="/home">Home</a>
-            </li>
-            <li>
-                <a href="/home/tochten">Tochten</a>
-            </li>
-            <li>
-                <a href="/home/opdrachten">Opdrachten</a>
-            </li>
-            <li>
-                <a href="/home/starttrip">Start tocht</a>
-            </li>
-            <li>
-                <a href="/logout">Logout</a>
-            </li>
-            <li>
-                <a href="/register">Register</a>
-            </li>
-            @elseif (Auth::user()->role == '2')
-            <li class="sidebar-brand">
-                <a href="/home">
-                    Puzzeltocht (SUPERUSER)
-                </a>
-            </li>
-            <li>
-                <a href="/home">Home</a>
-            </li>
-            <li>
-                <a href="/logout">Logout</a>
-            </li>
-            <li>
-                <a href="/home/starttrip">Tochten</a>
-            </li>   
-            @elseif (Auth::user()->role == '3')
-            <li class="sidebar-brand">
-                <a href="/home">
-                    Puzzeltocht (DEELNEMER)
-                </a>
-            </li>
-            <li>
-                <a href="/home">Home</a>
-            </li>
-            <li>
-                <a href="/logout">Logout</a>
-            </li>
-            <li>
-                <a href="/home/starttrip">Speel tochten</a>
-            </li>        
-            @endif
-            </ul>
-        </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              @if (Auth::guest())
+                <a class="navbar-brand" href="/home">Puzzeltocht</a>
+              @elseif (Auth::user()->role == '1')
+                <a class="navbar-brand" href="/home">Puzzeltocht (Admin)</a>
+              @elseif (Auth::user()->role == '2')
+                <a class="navbar-brand" href="/home">Puzzeltocht (Superuser)</a>
+              @elseif (Auth::user()->role == '3')
+                <a class="navbar-brand" href="/home">Puzzeltocht (Deelnemer)</a>
+              @endif
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+              @if (Auth::guest())
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/login">Login</a></li>
+              @elseif (Auth::user()->role == '1')
+                <li><a href="/home/tochten">Tochten</a></li>
+                <li><a href="/home/starttrip">Tochten starten</a></li>
+                <li><a href="/home/opdrachten">Opdrachten</a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/logout">Logout</a></li>
+              @elseif (Auth::user()->role == '2')
+                <li><a href="/home/starttrip">Tochten starten</a></li>
+                <li><a href="/logout">Logout</a></li>
+              @elseif (Auth::user()->role == '3')
+                <li><a href="/home/starttrip">Tochten starten</a></li>
+                <li><a href="/logout">Logout</a></li>
+              @endif
+              </ul>
+            </div>
+          </div>
+        </nav>
 @yield('content')

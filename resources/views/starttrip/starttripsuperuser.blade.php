@@ -15,8 +15,8 @@ h3{
                <h1>Overzicht progressie teams</h1>
                <table>
                		<tr>
-               			<th>Naam:</th>
-               			<th>Team:</th>
+               			<th>Naam</th>
+               			<th>Team</th>
                			<th>Score</th>
                		</tr>
                		@foreach($teams as $team)

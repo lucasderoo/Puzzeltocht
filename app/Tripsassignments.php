@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tripsassignments extends Model
 {
     protected $fillable=[
-		'tripid',
+		'tripids',
+		'assignmentsids',
     ];
-    protected $table = 'tripsessions';
+    protected $table = 'tripsassignments';
 }
