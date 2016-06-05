@@ -157,49 +157,60 @@ class StarttripController extends Controller
 
             $score = DB::table('teamsusers')->where('userids', $userid)->pluck('score');
 
-            $score = implode('',$score);
+            $completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
 
-          	$count = count($assignments);
+            $completed = (int)implode('',$completed);
 
-          	if($count < $number){
-          		$teamid = DB::table('teamsusers')->where('userids', '=', $userid)->pluck('teamids');
+            $completed++;
 
-          		$teamid = implode('',$teamid);
+            if($completed == $number){
+            	$score = implode('',$score);
 
-          		$team = DB::table('teams')
-					->join('teamsusers', 'id', '=', 'teamsusers.teamids')
-					->join('users', 'userids', '=', 'users.id')
-					->where('teamsusers.teamids', '=', $teamid)
-					->get();
+          		$count = count($assignments);
 
-				foreach($team as $teams){
-					$teamscoree[] = $teams->score;
+          		if($count < $number){
+	          		$teamid = DB::table('teamsusers')->where('userids', '=', $userid)->pluck('teamids');
+
+	          		$teamid = implode('',$teamid);
+
+	          		$team = DB::table('teams')
+						->join('teamsusers', 'id', '=', 'teamsusers.teamids')
+						->join('users', 'userids', '=', 'users.id')
+						->where('teamsusers.teamids', '=', $teamid)
+						->get();
+
+					foreach($team as $teams){
+						$teamscoree[] = $teams->score;
+					}
+
+					$teamscore = array_sum($teamscoree);
+
+					foreach($team as $teams){
+						$teamname = $teams->teamname;
+					}
+	          		return view('starttrip.tripresult', compact('teamname','score','tripid','tripname','teamscore','team'));
+          		}
+	        	for ($i = 1; $i <= $count; $i++) {
+	          		$order[] = $i;
+	        	}
+
+	    		foreach($order as $key => $value) { 
+	  				$assignments[$key]->order = $value; 
+	  	  		}
+
+	  	  		foreach($assignments as $assignment) {
+				    if ($assignment->order == $number) {
+				        $item[] = $assignment;
+				        break;
+				    }
 				}
 
-				$teamscore = array_sum($teamscoree);
-
-				foreach($team as $teams){
-					$teamname = $teams->teamname;
-				}
-          		return view('starttrip.tripresult', compact('teamname','score','tripid','tripname','teamscore','team'));
-          	}
-        	for ($i = 1; $i <= $count; $i++) {
-          		$order[] = $i;
-        	}
-
-    		foreach($order as $key => $value) { 
-  				$assignments[$key]->order = $value; 
-  	  		}
-
-  	  		foreach($assignments as $assignment) {
-			    if ($assignment->order == $number) {
-			        $item[] = $assignment;
-			        break;
-			    }
-			}
-
-		    return view('starttrip.playtrip', compact('number','item','count','teamname','score','tripid','score'));
-	}
+		    	return view('starttrip.playtrip', compact('number','item','count','teamname','score','tripid','score'));
+            }
+            else{
+            	return "Hey dat mag niet!";
+            }
+		}
 	}
     public function tripscore($tripid,$number){
     	$user =  Auth::user();
