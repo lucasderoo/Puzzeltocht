@@ -197,7 +197,6 @@ class AssignmentsController extends Controller
 
     $assignments = DB::select( DB::raw("DELETE FROM tripsassignments WHERE assignmentsids = $id") );
 
-
     //header('Location: http://puzzeltocht.dev/Puzzeltocht4/public/home/tochten/'.$prevurl.'/' .$tripid); 
     return redirect('/home/tochten/'.$prevurl.'/' .$tripid);
   }
@@ -224,6 +223,7 @@ class AssignmentsController extends Controller
   public function connect($tripid){
 
     $prevurl = $_SERVER['HTTP_REFERER'];
+
     if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
         $prevurl = "create";
     }

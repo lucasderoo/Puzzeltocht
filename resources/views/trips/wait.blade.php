@@ -1,1 +1,4 @@
-<?php header('Location: http://puzzeltocht.dev/home/tochten/create/'.$newtripid); ?>
+<?php 
+	header('Location: /home/tochten/create/'.$newtripid); 
+?>
+<!--<script>window.location.href = "/home/tochten/create/{{$newtripid}}";</script>;-->

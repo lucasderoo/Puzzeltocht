@@ -9,10 +9,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 middiv">
-           		<h3>Resultaalt voor "{{ $tripname }}"</h3>
-                <p>Goede antwoorden: {{ $good }}</p>
-                <p>Foute antwoorden: {{ $wrong}}</p>
-                <p>Niet ingevulde antwoorden: {{ $noanswer }}</p>
+                <p>Tochtnaam: {{ $tripname }}</p>
+           		<p>jouw Score: {{ $score }}</p>
+                <p>teamscore: {{ $teamscore }}</p>
+                <table>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Score</th>
+                    </tr>
+                    @foreach($team as $teamresult)
+                    <tr>
+                        <td>{{ $teamresult->name }}</td>
+                        <td>{{ $teamresult->score }}</td>
+                    </tr>
+                    @endforeach
+                </table>
             </div>
         </div>
     </div>

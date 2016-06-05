@@ -79,7 +79,7 @@ h3 {
   <h3>Vraag</h3>
 
     <label name="type" for="sel1">Type:</label>
-    <select class="form-control" id="sel1">
+    <select class="form-control" name="type" id="sel1">
       <option value="question">Vraag</option>
       <option value="type2">?</option>
       <option value="type2">?</option>
@@ -95,24 +95,24 @@ h3 {
   <h3>Antwoorden</h3>
 
   <label for="answer_1" >Antwoord 1:</label>
-  <label><input type="radio" value="answer_1" checked></label>
+  <label name="correct_answer"><input name="correct_answer" type="radio" value="answer_1" checked></label>
     <input name="answer_1" type="text" class="form-control" id="usr" required="required">
 
   <label for="answer_2">Antwoord 2:</label>
-  <label><input type="radio" value=""></label>
+  <label name="correct_answer"><input name="correct_answer" type="radio" value="answer_2"></label>
     <input name="answer_2"type="text" class="form-control" id="usr" required="required">
 
   <label for="answer_3">Antwoord 3:</label>
-  <label><input type="radio" value=""></label>
+  <label name="correct_answer"><input name="correct_answer" type="radio" value="answer_3"></label>
     <input name="answer_3" type="text" class="form-control" id="usr" required="required">
 
   <h3>Locatie</h3>
 
   <label for="longitude">Longitude:</label>
-    <input name="longitude" type="text" class="form-control" id="usr" required="required">
+    <input name="longitude" type="text" class="form-control" id="usr">
 
   <label for="latitude">Latitude:</label>
-    <input name="latitude" type="text" class="form-control" id="usr" required="required">
+    <input name="latitude" type="text" class="form-control" id="usr" >
 </div>
 
 <div class="page-header">

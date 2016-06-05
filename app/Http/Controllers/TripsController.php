@@ -59,7 +59,9 @@ class TripsController extends Controller
 		$trips = Request::all();
   		$newtrip = Trips::create($trips);
   		$newtripid = $newtrip->id;
-		return view('trips.wait', compact('newtripid'));
+
+  		return redirect('/home/tochten/create/'.$newtripid); 
+		//return view('trips.wait', compact('newtripid'));
 	}
   	public function create($tripid)
   	{

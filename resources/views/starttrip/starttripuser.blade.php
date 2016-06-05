@@ -1,114 +1,55 @@
-<?php  
-  session_start();
-?>
 @extends('layouts.app')
 
-<style>
-.underline{
-  height: 1px;
-  background-color: black;
-  width: 100px;
-}
-.answers p{
- display: inline-block;
-}
-.answers input{
- display: inline-block;
-}
-.hello{
-  display: none;
-}
-.hide{display: none;}
-</style>
 
+
+
+
+
+
+
+<style>
+.team{
+  display: none;
+  background-color: red;
+}
+
+</style>
 @section('content')
 <div id="page-content-wrapper">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12 middiv">
-        <form class="form-horizontal" role="form" id='login' method="post" action="/home/starttrip/start/result/{{$tripid}}">
-        <?php $i=1; ?>
-        <?php foreach($assignments as $assignment): ?>
-         <?php if($i==1){?>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div id='question<?php echo $i;?>' class='cont'>
-                    <?php 
-                      if($assignment->type == "question"){
-                        $type =  "vraag";
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 middiv">
+              <script> 
+                  $(document).ready(function(){
+                    $("#showteam").click(function(){
+                      if($('.team').css('display') == 'none')
+                      {
+                        $("#team").slideDown("slow");
                       }
-                    ?>
-                    <p>Type: {{ $type }}</p>
-                    <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
-                    <p><?php echo $assignment->question;?></p>
-                    <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
-                   <br/>
-                    <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>
-                    <br/>
-                    <input type="radio" value="answer_3" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_3;?>
-                    <br/>                                                               
-                    <br/>
-                    <button id='next<?php echo $i;?>' class='next btn btn-success' type='button' >Next</button>
-                    </div>     
-                     <?php }elseif($i<1 || $i<$count){?>
-                    <div id='question<?php echo $i;?>' class='cont'>
-                      <p>Type: {{ $type }}</p>
-                      <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
-                      <p><?php echo $assignment->question;?></p>
-                      <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
-                      <br/>
-                      <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>
-                      <br/>
-                      <input type="radio" value="answer_3" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_3;?>
-                      <br/>                                                                    
-                      <br/>
-                      <!--<button id='pre<?php //echo $i;?><!--' class='previous btn btn-success' type='button'>Previous</button>-->                
-                      <button id='next<?php echo $i;?>' class='next btn btn-success' type='button' >Next</button>
-                    </div>
-                   <?php }elseif($i==$count){?>
-                    <div id='question<?php echo $i;?>' class='cont'>
-                      <p>Type: {{ $type }}</p>
-                      <p class='questions' id="qname<?php echo $i;?>"> Vraag:<?php echo $i?></p>
-                      <p><?php echo $assignment->question;?></p>
-                      <input type="radio" value="answer_1" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_1;?>
-                      <br/>
-                      <input type="radio" value="answer_2" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_2;?>
-                      <br/>
-                      <input type="radio" value="answer_3" id='radio1_<?php echo $assignment->id;?>' name='{{ $assignment->id }}'/><?php echo $assignment->answer_3;?>
-                      <br/>                                                                      
-                      <br/>
+                      else {
+                        $("#team").slideUp("slow");
+                      }
+                    });
+                });
+                </script>
+                <h1>Dit is de tocht die jij gaat doen</h1>
 
-                      <!--<button id='pre<?php //echo $i;?><!--' class='previous btn btn-success' type='button'>Previous</button>-->                    
-                      <button id='next<?php echo $i;?>' class='next btn btn-success' type='submit'>Finish</button>
-                    </div>
-                  <?php } $i++; ?>
+                <p>Tochtnaam: {{ $tripname }}</p>
+                <p>Aantal opdrachten: {{ $count }}</p>
+                
+                <h1>Dit is het team waarin jij zit</h1>
+                <p>Teamnaam: {{ $teamname }}</p>
+                <p>Aantal leden: {{ $teamsize }}</p>
+                <button id="showteam">Laat team zien</button>
+                <div class="team" id="team">
+                  @foreach($team as $teamlid)
+                    <p>{{ $teamlid->name }}</p>
                   @endforeach
-            </form>
-          </div>
-      </div>
-  </div>
+                </div>
+                <a href="/home/starttrip/start/{{$tripid}}/1" class="btn btn-success">Start tocht</a>
+            </div>
+        </div>
+    </div>
 </div>
-<script>
-    $('.cont').addClass('hide');
-    count=$('.questions').length;
-     $('#question'+1).removeClass('hide');
 
-     $(document).on('click','.next',function(){
-         element=$(this).attr('id');
-         last = parseInt(element.substr(element.length - 1));
-         nex=last+1;
-         $('#question'+last).addClass('hide');
-
-         $('#question'+nex).removeClass('hide');
-     });
-
-     /*$(document).on('click','.previous',function(){
-             element=$(this).attr('id');
-             last = parseInt(element.substr(element.length - 1));
-             pre=last-1;
-             $('#question'+last).addClass('hide');
-
-             $('#question'+pre).removeClass('hide');
-         });*/
-
-    </script>
 @endsection
