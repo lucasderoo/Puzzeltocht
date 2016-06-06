@@ -53,10 +53,10 @@ class AssignmentsController extends Controller
     isLoggedIn();
     Auth();
     $prevurl = $_SERVER['HTTP_REFERER'];
-    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
         $prevurl = "create";
     }
-    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
         $prevurl = "edit";
     }
     else{
@@ -109,10 +109,10 @@ class AssignmentsController extends Controller
     isLoggedIn();
     Auth();
     $prevurl = $_SERVER['HTTP_REFERER'];
-    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
         $prevurl = "create";
     }
-    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
         $prevurl = "edit";
     }
     else{
@@ -137,10 +137,10 @@ class AssignmentsController extends Controller
     isLoggedIn();
     Auth();
     $prevurl = $_SERVER['HTTP_REFERER'];
-    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
         $prevurl = "create";
     }
-    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
         $prevurl = "edit";
     }
     else{
@@ -174,10 +174,10 @@ class AssignmentsController extends Controller
     isLoggedIn();
     Auth();
     $prevurl = $_SERVER['HTTP_REFERER'];
-    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
         $prevurl = "create";
     }
-    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
         $prevurl = "edit";
     }
     else{
@@ -224,10 +224,10 @@ class AssignmentsController extends Controller
 
     $prevurl = $_SERVER['HTTP_REFERER'];
 
-    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
         $prevurl = "create";
     }
-    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
         $prevurl = "edit";
     }
     else{
