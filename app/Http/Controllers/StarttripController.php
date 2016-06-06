@@ -112,10 +112,13 @@ class StarttripController extends Controller
 					->where('teamsusers.teamids', '=', $inteam)
 					->get();
 
+		$completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
+   		$completed = (int)implode('',$completed);
+   		$completed++;
 		  $teamsize = count($team);
           $count = count($assignments);
 
-		  return view('starttrip.starttripuser', compact('tripid','tripname','count','teamname','team','teamsize'));
+		  return view('starttrip.starttripuser', compact('tripid','tripname','count','teamname','team','teamsize', 'completed'));
 		}
 		elseif(Auth::user()->role == '2') {
 			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
