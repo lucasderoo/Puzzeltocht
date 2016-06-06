@@ -117,10 +117,13 @@
                 <a class="navbar-brand" href="/home">Puzzeltocht</a>
               @elseif (Auth::user()->role == '1')
                 <a class="navbar-brand" href="/home">Puzzeltocht (Admin)</a>
+                <p>{{ Auth::user()->name }}</p>
               @elseif (Auth::user()->role == '2')
                 <a class="navbar-brand" href="/home">Puzzeltocht (Superuser)</a>
+                <p>{{ Auth::user()->name }}</p>
               @elseif (Auth::user()->role == '3')
                 <a class="navbar-brand" href="/home">Puzzeltocht (Deelnemer)</a>
+                <p>{{ Auth::user()->name }}</p>
               @endif
             </div>
             <div id="navbar" class="navbar-collapse collapse">

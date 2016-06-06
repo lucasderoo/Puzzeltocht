@@ -15,15 +15,18 @@ h3{
                <h1>Overzicht progressie teams</h1>
                <table>
                		<tr>
-               			<th>Naam</th>
                			<th>Team</th>
                			<th>Score</th>
                		</tr>
                		@foreach($teams as $team)
+                  <?php 
+                    $teamscore[] = $team->score;
+                    $teamscore = array_sum($teamscore);
+
+                  ?>
                		<tr>
-               			<td>{{ $team->name}}</td>
                			<td>{{ $team->teamname }}</td>
-               			<td>{{ $team->score }}</td>
+               			<td>{{ $teamscore }}</td>
                		</tr>
                		@endforeach
                </table>

@@ -10,9 +10,7 @@
 <style>
 .team{
   display: none;
-  background-color: red;
 }
-
 </style>
 @section('content')
 <div id="page-content-wrapper">
@@ -40,7 +38,7 @@
                 <h1>Dit is het team waarin jij zit</h1>
                 <p>Teamnaam: {{ $teamname }}</p>
                 <p>Aantal leden: {{ $teamsize }}</p>
-                <button id="showteam">Laat team zien</button>
+                <button id="showteam">Laat team zien</button><br>
                 <div class="team" id="team">
                   @foreach($team as $teamlid)
                     <p>{{ $teamlid->name }}</p>

@@ -121,8 +121,7 @@ class StarttripController extends Controller
 			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 			if (in_array($tripid, $tripsessions)) {
 				$teams = DB::table('teams')
-					->join('teamsusers', 'id', '=', 'teamsusers.teamids')
-					->join('users', 'userids', '=', 'users.id')
+					->join('teamsusers', 'teams.id', '=', 'teamsusers.teamids')
 					->where('teamsusers.tripids', '=', $tripid)
 					->get();
 				return view('starttrip.starttripsuperuser', compact('tripid','teams')); 
@@ -312,7 +311,7 @@ class StarttripController extends Controller
         	'tripid' => $tripid,
       	]);
   	  }
-	  return view('starttrip.newsession', compact('tripid'));
+	  return redirect('/home/starttrip/teamoverview/'.$tripid);
 	}
 
 
@@ -329,7 +328,7 @@ class StarttripController extends Controller
         	'tripid' => $tripid,
       	]);
   	  }
-	  return view('starttrip.newtripsession', compact('tripid'));
+	  return redirect('/home/starttrip/start/'.$tripid);
 	}
 
 
@@ -366,6 +365,7 @@ class StarttripController extends Controller
 	  else{
 	  	$starttripbutton = "no";
 	  }
+
 
    	  if (in_array($tripid, $sessions)) {
 		  $trips = Trips::find($tripid);
