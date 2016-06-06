@@ -1,1 +1,1 @@
-<?php header('Location: http://puzzeltocht.dev/home/starttrip/teamoverview/'.$tripid); ?>
+<?php header('Location: /home/starttrip/teamoverview/'.$tripid); ?>

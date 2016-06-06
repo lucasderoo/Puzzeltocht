@@ -107,10 +107,10 @@ class TripsController extends Controller
   		if ($count < "5"){
   			$prevurl = $_SERVER['HTTP_REFERER'];
 
-		    if($prevurl == "http://puzzeltocht.dev/home/tochten/create/".$tripid){
+		    if($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/create/".$tripid){
 		        $prevurl = "create";
 		    }
-		    elseif($prevurl == "http://puzzeltocht.dev/home/tochten/edit/".$tripid){
+		    elseif($prevurl == "http://". $_SERVER['SERVER_NAME'] ."/home/tochten/edit/".$tripid){
 		        $prevurl = "edit";
 		    }
   			return view('trips.error',compact('tripid','prevurl'));
