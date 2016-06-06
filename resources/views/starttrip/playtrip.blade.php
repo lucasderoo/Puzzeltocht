@@ -19,7 +19,8 @@
             <p>{{ $question->answer_3 }}</p>
             <label><input type="radio" name="answer" value="answer_3"></label> 
             @endforeach
-            {!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
+            <a class="btn btn-danger" href="/home/starttrip/start/{{$tripid}}">Stop</a>
+            <button type="submit" class="btn btn-primary form-control"><?php echo ($number == $count ? 'Finish' : 'Next'); ?></button>
             {!! Form::close() !!}
             </div>
         </div>

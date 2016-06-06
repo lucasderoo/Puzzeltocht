@@ -44,7 +44,7 @@
                     <p>{{ $teamlid->name }}</p>
                   @endforeach
                 </div>
-                <a href="/home/starttrip/start/{{$tripid}}/1" class="btn btn-success">Start tocht</a>
+                <a href="/home/starttrip/start/{{$tripid}}/{{$completed}}" class="btn btn-success"><?php echo ($completed == '1' ? 'Start tocht' : 'Ga verder'); ?></a>
             </div>
         </div>
     </div>
