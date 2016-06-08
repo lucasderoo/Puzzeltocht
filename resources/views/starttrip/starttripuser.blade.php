@@ -44,7 +44,16 @@
                     <p>{{ $teamlid->name }}</p>
                   @endforeach
                 </div>
-                <a href="/home/starttrip/start/{{$tripid}}/{{$completed}}" class="btn btn-success"><?php echo ($completed == '1' ? 'Start tocht' : 'Ga verder'); ?></a>
+                <?php
+                  if($completed == '1'){
+                    $buttonText = 'Start tocht';
+                  } else if($completed == $assignments) {
+                    $buttonText = 'Bekijk score';
+                  } else {
+                    $buttonText = 'Ga verder';
+                  }
+                ?>
+                <a href="/home/starttrip/start/{{$tripid}}/{{$completed}}" class="btn btn-success"><?=$buttonText?></a>
             </div>
         </div>
     </div>
