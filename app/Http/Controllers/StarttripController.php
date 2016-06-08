@@ -115,10 +115,17 @@ class StarttripController extends Controller
 		$completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
    		$completed = (int)implode('',$completed);
    		$completed++;
+
+   		$assignments = DB::table('trips')->where('id', $tripid)->pluck('assignments');
+   		$assignments = (int)implode('',$assignments);
+   		$assignments++;
+
+		  $teamsize = count($team);
+
 		  $teamsize = count($team);
           $count = count($assignments);
 
-		  return view('starttrip.starttripuser', compact('tripid','tripname','count','teamname','team','teamsize', 'completed'));
+		  return view('starttrip.starttripuser', compact('tripid','tripname','count','teamname','team','teamsize', 'completed', 'assignments'));
 		}
 		elseif(Auth::user()->role == '2') {
 			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
