@@ -1,124 +1,80 @@
 @extends('layouts.app')
+
+
 <style>
-a{
-    text-decoration: none !important;
+.jumbotron{
+    background-color:#2E2D88;
+    color:white;
 }
-.top{
-    width: 100%;
-    height: 100px;
-    border-bottom: 1px solid black;
+
+.navbar
+{
+  border-radius: 0 !important;
 }
-.TopInput{
-    margin-left: auto;
-    margin-right: auto;
-    width: 235px;
+
+
+.navbar-default{
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
-.top h1{
-    text-align: center;
+
+.navbar-default .navbar-brand {
+  color: #fff;
 }
-.midtop{
-    width: 100%;
-    border-bottom: 1px solid black;
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #5E5E5E;
 }
-.midtopbuttons{
-    width: 800px;
-    margin: 10px auto;
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
 }
-.midtop a{
-    display: inline-block;
+
+.navbar-default .navbar-toggle {
+  border-color: #fff
 }
-.midtop a{
-    margin-left: 31px;
-    margin-right: 31px;
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
 }
-.DataTR{
-    height: 70px;
-}
-th{
-    width: 120px;
-}
-td{
-    text-align: center;
-    padding: 10px !important;
-}
-th{
-    text-align: center !important;
-}
-.clickable-row:hover{
-    background-color: white;
-    opacity: 0.8;
-    cursor: pointer;
-}
-.no-data{
-    text-align: center;
-}
-table{
-    margin: 10 auto;
-}
-.mida{
-    margin: 5 auto;
-    display: block !important;
-}
-.underlineH1{
-    width: 100%;
-    height: 1px;
-    background-color: #999999;
-    float: left;
-}
-.top-table table{
-    width: 100%;
-}
-.middiv h1{
-    text-align: center;
-}
-.newtrip{
-    float: right;
-    margin-top: 25px;
-}
-.midtable{
-    float: left;
-    margin-top: 15px;
-}
-th{
-    text-align: center;
-}
-td{
-    text-align: center;
-}
+
+
+
+
+
 </style>
 @section('content')
-<div id="page-content-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 middiv">
-                <h1>Tochten die kunt doen</h1>
-                <div class="underlineH1"></div>
-                <div class="top-table">
-                    <table class="table table-striped midtable">
-                    <thead>
-                      <tr>
-                        <th>Tripnaam</th>
-                        <th>Aantal opdrachten</th>
-                        <th>Start tocht</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($trips as $trip)
-                        <tr class='clickable-row DataTR' data-href="/home/tochten/show/{{$trip->id}}">
-                            <td>{{ $trip->tripname }}</td>
-                            <td>{{ $trip->assignments }}</td>
-                            <td><a href="starttrip/teamoverview/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
+<div class="container">
+
+<div class="page-header">
+   <h1>Tochten die je kunt doen</h1>
 </div>
-        <!-- /#page-content-wrapper -->
+
+<table class="table table-striped">
+ <tr>
+   <th>Tripnaam</th>
+   <th>Aantal Opdrachten</th>
+   <th>Start Tocht</th>
+ </tr>
+  <tbody>
+  @foreach ($trips as $trip)
+      <tr class='clickable-row DataTR' data-href="/home/tochten/show/{{$trip->id}}">
+          <td>{{ $trip->tripname }}</td>
+          <td>{{ $trip->assignments }}</td>
+          <td><a href="starttrip/teamoverview/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
+      </tr>
+  @endforeach
+  </tbody>
+</table>
+
+ <div class="page-header">
+</div>
+
+</div>
 
 </body>
+
 </html>
 @endsection

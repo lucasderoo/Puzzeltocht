@@ -1,26 +1,27 @@
 @extends('layouts.app')
-
-
 <style>
 .jumbotron{
     background-color:#2E2D88;
     color:white;
 }
 
-.form-control {
-     width: 60%;
-     margin-bottom: 5px; 
-}
-
-
-.button{
-  width: 100%;
-  float: left;
+h3 {
+    margin-bottom: 45px;
 }
 
 .navbar
 {
   border-radius: 0 !important;
+}
+
+.form-control {
+     width: 90%;
+     margin-bottom: 5px; 
+}
+
+.button{
+  width: 100%;
+  float: left;
 }
 
 .button h1{
@@ -31,8 +32,7 @@
   float: right;
   padding-bottom: 9px;
     margin: 25px 0 20px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    margin-bottom: 0;
 }
 
 .navbar-default{
@@ -61,51 +61,51 @@
     background-color: #fff;
 }
 
-.btn-default{
-    margin-bottom: 15px;
+
+.alert-danger{ 
+	width: 60%;
+	margin-top: 160px;
 }
 
-.btn-1{
-    float: right;
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+.button{
+  width: 100%;
+  float: left;
 }
 
-.btn-succes{
-  margin-right: 10px;
+.button h1{
+  float: left;
+}
+
+.tocht{
+  float: right;
+  padding-bottom: 9px;
+    margin: 25px 0 20px;
+    margin-bottom: 0;
 }
 
 </style>
 @section('content')
 <div class="container">
 
-<div class="page-header">
-   <h1>Teams voor "{{$tripname}}"</h1>
-      <a href="/home/starttrip/newtripsession/{{$tripid}}" class="btn btn-success tocht">Start de tocht!</a>
+<div class="page-header button">
+	<h1>Geen Toegang</h1>
+	<a href="/login" class="btn btn-primary tocht">Login</a>
 </div>
-<table class="table table-striped">
- <tr>
-   <th>Teamnaam</th>
-   <th>Aantal deelnemers</th>
- </tr>
-  @foreach($teams as $team)
-  <tdbody>
-  <tr>
-    <td>{{ $team->teamname }}</td>
-    <td>{{ $team->teamsize }}</td>
-  </tr>
-  </tdbody>   
-  @endforeach
-</table>
 
-</table>
+<div class="alert alert-danger" role="alert">
+  @if($error == "1")
+  <strong>Hey!</strong> Dat mag niet.
+  @elseif($error == "2")
+  <p>Je zit al in een team!</p>
+  @endif
+</div>
 
- <div class="page-header">
+<div class="page-header">
 </div>
 
 </div>
 
 </body>
+
 </html>
 @endsection

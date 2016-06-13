@@ -1,3 +1,18 @@
+<?php 
+    if (Auth::guest()) {
+        $role = "";
+    }
+    elseif(Auth::user()->role == "1"){
+        $role = "Beheerder";
+    }
+    elseif(Auth::user()->role == "2"){
+        $role = "Superuser";
+    }
+    elseif(Auth::user()->role == "3"){
+        $role = "Deelnemer";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,18 +128,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              @if (Auth::guest())
+                @if(Auth::guest())
                 <a class="navbar-brand" href="/home">Puzzeltocht</a>
-              @elseif (Auth::user()->role == '1')
-                <a class="navbar-brand" href="/home">Puzzeltocht (Admin)</a>
-                <p>{{ Auth::user()->name }}</p>
-              @elseif (Auth::user()->role == '2')
-                <a class="navbar-brand" href="/home">Puzzeltocht (Superuser)</a>
-                <p>{{ Auth::user()->name }}</p>
-              @elseif (Auth::user()->role == '3')
-                <a class="navbar-brand" href="/home">Puzzeltocht (Deelnemer)</a>
-                <p>{{ Auth::user()->name }}</p>
-              @endif
+                @else
+                <a class="navbar-brand" href="/home">Puzzeltocht(<?php echo Auth::user()->name ?>:{{$role}})</a>
+                @endif
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">

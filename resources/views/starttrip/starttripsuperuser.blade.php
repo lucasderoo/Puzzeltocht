@@ -19,14 +19,9 @@ h3{
                			<th>Score</th>
                		</tr>
                		@foreach($teams as $team)
-                  <?php 
-                    $teamscore[] = $team->score;
-                    $teamscore = array_sum($teamscore);
-
-                  ?>
                		<tr>
                			<td>{{ $team->teamname }}</td>
-               			<td>{{ $teamscore }}</td>
+               			<td>{{ $team->score }}</td>
                		</tr>
                		@endforeach
                </table>

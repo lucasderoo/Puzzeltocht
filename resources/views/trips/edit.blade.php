@@ -1,146 +1,151 @@
 @extends('layouts.app')
 <style>
-a{
-    text-decoration: none !important;
+.jumbotron{
+    background-color:#2E2D88;
+    color:white;
 }
-.top{
+
+.form-control {
+     width: 60%;
+     margin-bottom: 5px; 
+}
+
+
+.button{
     width: 100%;
-    height: 100px;
-    border-bottom: 1px solid black;
+    float: left;
 }
-.TopInput{
-    margin-left: auto;
-    margin-right: auto;
-    width: 235px;
+
+.navbar
+{
+  border-radius: 0 !important;
 }
-.top h1{
-    text-align: center;
+
+.button h1{
+    float: left;
 }
-.midtop{
-    width: 100%;
-    border-bottom: 1px solid black;
+
+.tocht{
+    float: right;
+    padding-bottom: 9px;
+    margin: 25px 0 20px;
+    margin-bottom: 10;
 }
-.midtopbuttons{
-    width: 800px;
-    margin: 10px auto;
+
+.navbar-default{
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
-.midtop a{
-    display: inline-block;
+
+.navbar-default .navbar-brand {
+  color: #fff;
 }
-.midtop a{
-    margin-left: 31px;
-    margin-right: 31px;
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #5E5E5E;
 }
-.DataTR{
-    height: 70px;
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
 }
-th{
-    width: 120px;
+
+.navbar-default .navbar-toggle {
+  border-color: #fff
 }
-td{
-    text-align: center;
-    padding: 10px !important;
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
 }
-th{
-    text-align: center !important;
+
+.btn-default{
+    margin-bottom: 15px;
 }
-.clickable-row:hover{
-    background-color: white;
-    opacity: 0.8;
-    cursor: pointer;
+
+.btn-1{
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
-.no-data{
-    text-align: center;
-}
-table{
-    margin: 10 auto;
-}
-}
+
+
 </style>
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div>
-                      {!! Form::open(['method' => 'post', 'url' => '/home/tochten/store/'. $tripid]) !!}
-                    </div>
-                    <div class="top">
-                        <h1>Nieuwe tocht</h1>
-                        <div class="TopInput">
-                            {!! Form::label('Tripname', 'Tochtnaam:') !!}
-                            {!! Form::text('tripname', $tripname, array('maxlength' => 100,'required' => 'required' )) !!}
-                        </div>
-                    </div>
-
-                    <div class="midtop">
-                        <div class="midtopbuttons">
-                            <a href="/home/opdrachten/create/{{$tripid}}">Nieuwe vraag</a>
-                            <a href="">Nieuwe ????</a>
-                            <a href="">Nieuwe ????</a>
-                            <a href="">Nieuwe ????</a>
-                            <a href="/home/opdrachten/connect/{{$tripid}}">Alle opdrachten</a>
-                        </div>
-                    </div>
-                    <div class="midmid">
-                    <?php if ($assignments == "") : ?>
-                            <div class="no-data">
-                                <h1>No data found!</h1>
-                            </div>
-                    <?php else : ?>
-                    <table class="table-striped">
-                            <tr>
-                                <th>Type</th>
-                                <th>Titel</th>
-                                <th>kenmerk</th>
-                                <th>Aanpassen</th>
-                                <th>Verwijderen</th>
-                                <th>Active</th>
-                            </tr>
-                        <script>
-                        jQuery(document).ready(function($) {
-                        $(".clickable-row").click(function() {
-                            window.document.location = $(this).data("href");
-                        });
-                        });
-                        </script>
-                            <tdbody>
-                            @foreach ($assignments as $assignment)
-                            <tr class='clickable-row DataTR' data-href="/home/opdrachten/show/{{$assignment->id}}/{{$tripid}}">
-                                <td>{{ $assignment->type }}</td>
-                                <td>{{ $assignment->title }}</td>
-                                <?php 
-                                    $questions = $assignment->question;
-                                    $maxquestions = substr($questions, 0, 10);
-                                ?>
-                                <td>{{{ $maxquestions }}} ...</td>
-                                <td><a href="/home/opdrachten/edit/{{$assignment->id}}/{{$tripid}}" class="btn btn-info">Edit</a></td>
-                                <td><a href="/home/opdrachten/delete/{{$assignment->id}}/{{$tripid}}" class="btn btn-danger">Delete</a></td>
-                                <?php 
-                                    if($assignment->active == "N"){
-                                        $text = "Not active";
-                                        $classname = "btn btn-danger";
-                                    }
-                                    else{
-                                        $text = "Active";
-                                        $classname = "btn btn-success";
-                                    }
-                                ?>
-                                <td><a class="{{{ $classname }}}" href="/home/opdrachten/active/{{$assignment->id}}/{{$tripid}}">{{{ $text }}}</a></td>
-                            </tdbody>
-                            @endforeach
-                    </table>
-                    <?php endif; ?>
-                    </div>    
-                        {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
-                    </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
+<div class="page-header">
+    {!! Form::open(['method' => 'post', 'url' => '/home/tochten/store/'. $tripid]) !!}
+   <h1>Nieuwe Tocht</h1>
+    <label for="usr">Tochtnaam:</label>
+    <button href="#" class="btn btn-success tocht"><span class="glyphicon glyphicon-ok"></span> Update</button>
+  <input value="{{$tripname}}"type="text" class="form-control" id="usr" name="tripname" required>
 </div>
 
+<div class="button-group">
+  <a href="/home/opdrachten/create/{{$tripid}}" class="btn btn-default"></span>Nieuwe Vraag</a>
+  <a href="#" class="btn btn-default">Nieuwe ..?</a>
+  <a href="#" class="btn btn-default">Nieuwe ..?</a>
+  <a href="#" class="btn btn-default">Nieuwe ..?</a>
+  <a href="/home/opdrachten/connect/{{$tripid}}" class="btn btn-default">Alle Opdrachten</a>
+</div>
+<script>
+  jQuery(document).ready(function($) {
+  $(".clickable-row").click(function() {
+      window.document.location = $(this).data("href");
+  });
+  });
+</script>
+ <?php if ($assignments == "") : ?>
+    <div class="no-data">
+      <h1>No data found!</h1>
+    </div>
+  <?php else : ?>
+<table class="table table-striped">
+ <tr>
+   <th>Type</th>
+   <th>Titel</th>
+   <th>Kenmerk</th>
+   <th>Aanpassen</th>
+   <th>Verwijderen</th>
+   <th>Active</th>
+ </tr>
+ <tdbody>
+    @foreach ($assignments as $assignment)
+    <tr class='clickable-row DataTR' data-href="/home/opdrachten/show/{{$assignment->id}}/{{$tripid}}">
+        <td>{{ $assignment->type }}</td>
+        <td>{{ $assignment->title }}</td>
+        <?php 
+            $questions = $assignment->question;
+            $maxquestions = substr($questions, 0, 10);
+        ?>
+        <td>{{{ $maxquestions }}} ...</td>
+        <td><a href="/home/opdrachten/edit/{{$assignment->id}}/{{$tripid}}" class="btn btn-info">Edit</a></td>
+        <td><a href="/home/opdrachten/delete/{{$assignment->id}}/{{$tripid}}" class="btn btn-danger">Delete</a></td>
+        <?php 
+            if($assignment->active == "N"){
+                $text = "Not active";
+                $classname = "btn btn-danger";
+            }
+            else{
+                $text = "Active";
+                $classname = "btn btn-success";
+            }
+        ?>
+    <td><a class="{{{ $classname }}}" href="/home/opdrachten/active/{{$assignment->id}}/{{$tripid}}">{{{ $text }}}</a></td>
+    </tr>
+    @endforeach
+    </tdbody>
+</table>
+<?php endif; ?>
 @endsection
+
+
+
+
+
+
+
+
+
+
