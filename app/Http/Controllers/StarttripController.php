@@ -432,7 +432,16 @@ class StarttripController extends Controller
 		  	return view('starttrip.teamoverviewsuperuser', compact('teams','tripname','tripid'));
 		  }
 		  elseif (Auth::user()->role == '3') {
-		  	 return view('starttrip.teamoverviewuser', compact('teams','tripname','tripid','starttripbutton'));
+		  	 $checkteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
+		  	  if (in_array($userid, $checkteam)) {
+		  	  	$outteam = "1";
+		  	  }
+		  	  else{
+		  	  	$outteam = "2";
+		  	  }
+		  	 return view('starttrip.teamoverviewuser', compact('teams','tripname','tripid','starttripbutton','outteam'));
+
 		  }
 		  elseif (Auth::user()->role == '1') {
 		  	 return view('starttrip.teamoverviewsuperuser', compact('teams','tripname','tripid'));
@@ -561,6 +570,37 @@ class StarttripController extends Controller
 	}
 
 
+	public function outteam($tripid){
+		if (Auth::user()->role == '3') {
+			$user =  Auth::user();
+
+		  	$userid = $user->id;
+
+		  	$userid = "$userid";
+
+		  	$teamid = DB::table('teamsusers')->where('userids', $userid)->pluck('teamids');
+
+		  	$teamid = implode('',$teamid);
+
+		  	$team = DB::table('teamsusers')->where('teamids', $teamid)->get();
+
+		  	$count = count($team);
+
+		  	$teamsize = (int)$count;
+
+		  	--$teamsize;
+
+		  	$teamsize = (string)$teamsize;
+
+		  	DB::table('teams')->where('id', $teamid)->update([
+						'teamsize' => $teamsize,
+			]);
+
+		  	$outteam = DB::table('teamsusers')->where('userids', $userid)->delete();
+
+		  	return redirect('/home/starttrip/teamoverview/' .$tripid);
+		}
+	}
 	/*public function tripresult($tripid)
 	{
 	//isLoggedIn();

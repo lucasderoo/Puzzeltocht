@@ -88,6 +88,14 @@
       <a href="#" class="btn btn-danger tocht">Tocht is nog niet open gezet</a>
   @endif
   <a href="/home/starttrip/createteams/{{$tripid}}" class="btn btn-success tocht">Nieuw Team</a>
+  @if($outteam == "2")
+  
+  @elseif($outteam == "1")
+    {!! Form::open(['method' => 'post', 'url' => '/home/starttrip/outteam/' . $tripid]) !!}
+      <button class="btn btn-danger tocht">Team verlaten</button>
+    {!! Form::close() !!}
+  @endif
+ 
 </div>
 
 <table class="table table-striped">

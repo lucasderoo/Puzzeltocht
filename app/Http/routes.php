@@ -67,6 +67,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home/starttrip/newsession/{tripid}', 'StarttripController@newsession');
     Route::get('/home/starttrip/newtripsession/{tripid}', 'StarttripController@newtripsession');
     Route::get('/home/starttrip/stoptrip/{tripid}', 'StarttripController@stoptrip');
+    Route::post('/home/starttrip/outteam/{tripid}', 'StarttripController@outteam');
 
 
 });
