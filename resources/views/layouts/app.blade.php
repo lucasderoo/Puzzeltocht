@@ -122,38 +122,37 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 @if(Auth::guest())
-                <a class="navbar-brand" href="/home">Puzzeltocht</a>
+                    <a class="navbar-brand" href="/home">Puzzeltocht</a>
                 @else
-                <a class="navbar-brand" href="/home">Puzzeltocht(<?php echo Auth::user()->name ?>:{{$role}})</a>
+                    <a class="navbar-brand" href="/home">Puzzeltocht(<?php echo Auth::user()->name ?>:{{$role}})</a>
                 @endif
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-              @if (Auth::guest())
-                <li><a href="/logout">Logout</a></li>
-                <li><a href="/login">Login</a></li>
-              @elseif (Auth::user()->role == '1')
-                <li><a href="/home/tochten">Tochten</a></li>
-                <li><a href="/home/starttrip">Tochten starten</a></li>
-                <li><a href="/home/opdrachten">Opdrachten</a></li>
-                <li><a href="/register">Register</a></li>
-                <li><a href="/logout">Logout</a></li>
-              @elseif (Auth::user()->role == '2')
-                <li><a href="/home/starttrip">Tochten starten</a></li>
-                <li><a href="/logout">Logout</a></li>
-              @elseif (Auth::user()->role == '3')
-                <li><a href="/home/starttrip">Tochten starten</a></li>
-                <li><a href="/logout">Logout</a></li>
-              @endif
-              </ul>
+                <ul class="nav navbar-nav navbar-right">
+                @if (Auth::guest())
+                    <li><a href="/login">Login</a></li>
+                @elseif (Auth::user()->role == '1')
+                    <li><a href="/home/tochten">Tochten</a></li>
+                    <li><a href="/home/starttrip">Tochten starten</a></li>
+                    <li><a href="/home/opdrachten">Opdrachten</a></li>
+                    <li><a href="/register">Register</a></li>
+                @elseif (Auth::user()->role == '2')
+                    <li><a href="/home/starttrip">Tochten starten</a></li>
+                @elseif (Auth::user()->role == '3')
+                    <li><a href="/home/starttrip">Tochten starten</a></li>
+                @endif
+                @if (Auth::user())
+                    <li><a href="/logout">Logout</a></li>
+                @endif
+                </ul>
             </div>
-          </div>
-        </nav>
+        </div>
+    </nav>
 @yield('content')
