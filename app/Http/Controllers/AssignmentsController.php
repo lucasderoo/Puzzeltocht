@@ -197,16 +197,18 @@ class AssignmentsController extends Controller
         }
         $assignments = Assignments::find($id);
         return view('assignments.edit',compact('assignments','id','tripid','prevurl'));
-      }
-      else{
-        $error = "1";
-        return view('alert', compact('error'));
-      }
+    }
     else{
       $error = "1";
       return view('alert', compact('error'));
     }
   }
+  else{
+      $error = "1";
+      return view('alert', compact('error'));
+  }
+  }
+
   /**
   * Update the specified resource in storage.
   *
@@ -373,6 +375,14 @@ class AssignmentsController extends Controller
         //Auth();
         
         $assignmentsids = $_POST['connect'];
+
+        if (isset($_POST['connect'])){
+          $assignmentsids = $_POST['connect'];
+        }
+        else{
+          $error = "4";
+          return view('alert', compact('error'));
+        }
         foreach($assignmentsids as $assignmentsid){
           $newtrips = TripsAssignments::create([
             'tripids' => $tripid,

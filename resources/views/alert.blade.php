@@ -97,6 +97,10 @@ h3 {
   <strong>Hey!</strong> Dat mag niet.
   @elseif($error == "2")
   <p>Je zit al in een team!</p>
+  @elseif($error == "3")
+  <p>Minimaal 1 iemand toevoegen aan je team!</p>
+  @elseif($error == "4")
+  <p>Geen opdrachten aangevinkt!</p>
   @endif
 </div>
 

@@ -139,10 +139,6 @@ class StarttripController extends Controller
 				return view('alert', compact('error')); 
 			 }
 		  }
-		  else{
-		  	$error = "1";
-			return view('alert', compact('error')); 
-		  }
 			elseif(Auth::user()->role == '2') {
 				$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 				if (in_array($tripid, $tripsessions)) {
@@ -586,40 +582,54 @@ class StarttripController extends Controller
 				return view('alert', compact('error'));
 		  	}
 		  	else{
-		  		$userids = $_POST['connect'];
+
+		  		if (isset($_POST['connect'])){
+					$userids = $_POST['connect'];
+				}
+				else{
+					$userids = array();
+				}
 
 		  		array_push($userids, $userid);
 
-		  		foreach($userids as $userid){
-		  			if(in_array($userid, $checkifinteam)){
-		  				$checkuser[] = DB::table('users')->where('id', $userid)->pluck('name');		
-		  			}
-		  		}
-		  		if (empty($checkuser)) {
+		  		$count = count($userids);
 
-		  		}
-		  		else{
-		  			return $checkuser;
-		  		}
+		  		if($count > "1"){
+			  		foreach($userids as $userid){
+			  			if(in_array($userid, $checkifinteam)){
+			  				$checkuser[] = DB::table('users')->where('id', $userid)->pluck('name');		
+			  			}
+			  		}
+			  		if (empty($checkuser)) {
 
-		    	$teamsize = count($userids);
+			  		}
+			  		else{
+			  			return $checkuser;
+			  		}
 
-		    	$newteam = Request::all();
-		    	$newteam = Teams::create([
-	        		'teamname' => $newteam['teamname'],
-	        		'teamsize' => $teamsize,
-	        		'tripid' => $tripid,
-	    		]);
+			    	$teamsize = count($userids);
 
-		    	$teamid = $newteam->id;
-	    		foreach ($userids as $userid) 
-		    	{
-		    		Teamsusers::create([
-		        	'teamids' => $teamid,
-		        	'userids' => $userid,
-		        	'tripids' => $tripid,
-	    		]);
-		    	}
+			    	$newteam = Request::all();
+			    	$newteam = Teams::create([
+		        		'teamname' => $newteam['teamname'],
+		        		'teamsize' => $teamsize,
+		        		'tripid' => $tripid,
+		    		]);
+
+			    	$teamid = $newteam->id;
+		    		foreach ($userids as $userid) 
+			    	{
+			    		Teamsusers::create([
+			        	'teamids' => $teamid,
+			        	'userids' => $userid,
+			        	'tripids' => $tripid,
+		    		]);
+			    	}
+			    }
+			    else{
+			    	$error = "3";
+					return view('alert', compact('error'));
+			    }
 		    }
 	    	return redirect('/home/starttrip/teamoverview/' .$tripid);
 	    }
