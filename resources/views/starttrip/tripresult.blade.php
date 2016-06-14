@@ -10,17 +10,16 @@
         <div class="row">
             <div class="col-lg-12 middiv">
                 <p>Tochtnaam: {{ $tripname }}</p>
-           		<p>jouw Score: {{ $score }}</p>
                 <p>teamscore: {{ $teamscore }}</p>
                 <table>
                     <tr>
-                        <th>Naam</th>
-                        <th>Score</th>
+                        <th>Teamnaam</th>
+                        <th>Teamscore</th>
                     </tr>
-                    @foreach($team as $teamresult)
+                    @foreach($teams as $team)
                     <tr>
-                        <td>{{ $teamresult->name }}</td>
-                        <td>{{ $teamresult->score }}</td>
+                        <td>{{ $team->teamname }}</td>
+                        <td>{{ $team->score }}</td>
                     </tr>
                     @endforeach
                 </table>

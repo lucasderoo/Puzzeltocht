@@ -71,8 +71,8 @@
    <th class="leden">Aantal Leden</th>
  </tr>
  <tr>
-   <td>{{$teamname}}</td>
-   <td>{{$teamsize}}</td>
+   <td>{{ $teamname }}</td>
+   <td>{{ $teamsize }}</td>
 </tr>
 </table>
 

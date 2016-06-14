@@ -101,6 +101,8 @@ class StarttripController extends Controller
 
 		  $teamname = implode('', $teamname);
 
+		  $userinteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
+
 		  $assignments =  DB::table('tripsassignments')
             ->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
             ->get();
@@ -111,6 +113,7 @@ class StarttripController extends Controller
 					->where('teamsusers.teamids', '=', $inteam)
 					->get();
 
+		  if (in_array($userid,$userinteam)) {
 		  //$team = DB::table('teamsusers')->where('team')
 
 		 $completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
@@ -124,16 +127,24 @@ class StarttripController extends Controller
          $tripdone++;
 
 		  return view('starttrip.starttripuser', compact('tripdone','tripid','tripname','count','teamname','team','teamsize','completed'));
+		 }
+		 else{
+		 	$error = "1";
+			return view('alert', compact('error')); 
+		 }
 		}
 		elseif(Auth::user()->role == '2') {
 			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 			if (in_array($tripid, $tripsessions)) {
-				$teams = DB::table('teams')
-					->join('teamsusers', 'id', '=', 'teamsusers.teamids')
-					->where('tripids',$tripid)
-					->get();
 
-				return view('starttrip.starttripsuperuser', compact('tripid','teams')); 
+				 $assignments =  DB::table('tripsassignments')
+	            ->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+	            ->get();
+
+	            $count = count($assignments);
+				$teams = DB::table('teams')->where('tripid',$tripid)->get();
+
+				return view('starttrip.starttripsuperuser', compact('tripid','teams','count')); 
 			}
 			else{
 				//return "Hey! dat mag niet!";
@@ -188,22 +199,13 @@ class StarttripController extends Controller
 
 	          		$teamid = implode('',$teamid);
 
-	          		$team = DB::table('teams')
-						->join('teamsusers', 'id', '=', 'teamsusers.teamids')
-						->join('users', 'userids', '=', 'users.id')
-						->where('teamsusers.teamids', '=', $teamid)
-						->get();
+	          		$team = DB::table('teams')->where('id',$teamid)->pluck('score');
 
-					foreach($team as $teams){
-						$teamscoree[] = $teams->score;
-					}
+	          		$teams = DB::table('teams')->where('tripid',$tripid)->get();
 
-					$teamscore = array_sum($teamscoree);
+	          		$teamscore = implode('',$team);
 
-					foreach($team as $teams){
-						$teamname = $teams->teamname;
-					}
-	          		return view('starttrip.tripresult', compact('teamname','score','tripid','tripname','teamscore','team'));
+	          		return view('starttrip.tripresult', compact('teamname','score','tripid','tripname','teamscore','teams'));
           		}
 	        	for ($i = 1; $i <= $count; $i++) {
 	          		$order[] = $i;
@@ -271,6 +273,10 @@ class StarttripController extends Controller
 
 			$score = DB::table('teamsusers')->where('userids', $userid)->pluck('score');
 			$completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
+			$inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('teamids');
+			$inteam = implode('',$inteam);
+
+
 
 			$score = implode('',$score);
 			$completed = implode('',$completed);
@@ -282,10 +288,17 @@ class StarttripController extends Controller
 						'score' => $score,
 						'completed' => $completed,
 			    	]);
+			    	DB::table('teams')->where('id', $inteam)->update([
+						'score' => $score,
+						'completed' => $completed,
+			    	]);
 				}
 				else{
 					$completed++;
 					DB::table('teamsusers')->where('userids', $userid)->update([
+						'completed' => $completed,
+			    	]);
+			    	DB::table('teams')->where('id', $inteam)->update([
 						'completed' => $completed,
 			    	]);
 				}	
@@ -548,6 +561,7 @@ class StarttripController extends Controller
 		    	$newteam = Teams::create([
 	        		'teamname' => $newteam['teamname'],
 	        		'teamsize' => $teamsize,
+	        		'tripid' => $tripid,
 	    		]);
 
 		    	$teamid = $newteam->id;

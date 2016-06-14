@@ -17,11 +17,13 @@ h3{
                		<tr>
                			<th>Team</th>
                			<th>Score</th>
+                    <th>Progressie</th>
                		</tr>
                		@foreach($teams as $team)
                		<tr>
                			<td>{{ $team->teamname }}</td>
                			<td>{{ $team->score }}</td>
+                    <td>{{ $team->completed }}/{{$count}}</td>
                		</tr>
                		@endforeach
                </table>
