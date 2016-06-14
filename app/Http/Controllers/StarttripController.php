@@ -461,7 +461,7 @@ class StarttripController extends Controller
       		$starttripbutton = "ok";
       	}
       	else{
-      		$starttripbutton = "noteam";
+      		$starttripbutton = "open-noteam";
       	}
 	  }
 	  else{

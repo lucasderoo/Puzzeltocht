@@ -84,8 +84,10 @@
    <h1>Teams voor "{{$tripname}}"</h1>
   @if($starttripbutton == "ok")
       <a href="/home/starttrip/start/{{$tripid}}" class="btn btn-success tocht">Start de tocht!</a>
+  @elseif($starttripbutton == "open-noteam")
+      <a href="#" class="btn btn-danger tocht">Tocht is open gezet! maak nu een team aan</a>
   @else
-      <a href="#" class="btn btn-danger tocht">Tocht is nog niet open gezet</a>
+    <a href="#" class="btn btn-danger tocht">Tocht is nog niet open gezet!</a>
   @endif
   <a href="/home/starttrip/createteams/{{$tripid}}" class="btn btn-success tocht">Nieuw Team</a>
   @if($outteam == "2")

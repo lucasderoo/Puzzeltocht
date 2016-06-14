@@ -116,6 +116,11 @@
             margin: 25px 0 20px;
             margin-bottom: 10;
         }
+        .rolelink{
+            padding: 15px 15px;
+            font-size: 13px;
+            line-height: 20px;
+        }
     </style>
 </head>
 <body id="app-layout">
@@ -131,7 +136,7 @@
                 @if(Auth::guest())
                     <a class="navbar-brand" href="/home">Puzzeltocht</a>
                 @else
-                    <a class="navbar-brand" href="/home">Puzzeltocht(<?php echo Auth::user()->name ?>:{{$role}})</a>
+                    <a class="navbar-brand" href="/home">Puzzeltocht (<?php echo Auth::user()->name ?>:{{$role}})</a>
                 @endif
             </div>
             <div id="navbar" class="navbar-collapse collapse">
