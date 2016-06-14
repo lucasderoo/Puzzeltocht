@@ -29,8 +29,19 @@ trait RegistersUsers
         if (property_exists($this, 'registerView')) {
             return view($this->registerView);
         }
-
-        return view('auth.register');
+        if(isset(Auth::user()->role)){
+            if (Auth::user()->role == '1'){
+                return view('auth.register');
+            }
+            else{
+                $error = "1";
+                return view('alert', compact('error'));
+            }
+        }
+        else{
+            $error = "1";
+            return view('alert', compact('error'));
+        }
     }
 
     /**
