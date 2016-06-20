@@ -8,6 +8,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 
 class AuthController extends Controller
@@ -72,4 +73,19 @@ class AuthController extends Controller
             'role' => $data['role'],
         ]);
     }
+
+    public function register(Request $request)
+{   
+    $validator = $this->validator($request->all());
+
+    if ($validator->fails()) {
+        $this->throwValidationException(
+            $request, $validator
+        );  
+    }   
+
+    $this->create($request->all());
+
+    return redirect('register');
+}
 }

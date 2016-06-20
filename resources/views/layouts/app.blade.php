@@ -6,9 +6,6 @@
         $role = "Beheerder";
     }
     elseif(Auth::user()->role == "2"){
-        $role = "Superuser";
-    }
-    elseif(Auth::user()->role == "3"){
         $role = "Deelnemer";
     }
 ?>
@@ -150,8 +147,6 @@
                     <li><a href="/home/opdrachten">Opdrachten</a></li>
                     <li><a href="/register">Register</a></li>
                 @elseif (Auth::user()->role == '2')
-                    <li><a href="/home/starttrip">Tochten starten</a></li>
-                @elseif (Auth::user()->role == '3')
                     <li><a href="/home/starttrip">Tochten starten</a></li>
                 @endif
                 @if (Auth::user())
