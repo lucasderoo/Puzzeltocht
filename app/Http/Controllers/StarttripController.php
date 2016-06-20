@@ -21,10 +21,10 @@ function Auth(){
 	  if (Auth::guest()) {
 	    echo '<script>window.location.href = "/login?error=login";</script>';
 	  }
-	  elseif (Auth::user()->role == '2') {
+	  elseif (Auth::user()->role == '1') {
 	    echo '<script>window.location.href = "/home";</script>';
 	  }
-	  elseif (Auth::user()->role == '3') {
+	  elseif (Auth::user()->role == '2') {
 	    echo '<script>window.location.href = "/home";</script>';
 	  }
 	}
@@ -50,10 +50,10 @@ class StarttripController extends Controller
    		//Auth();
    		if(isset(Auth::user()->role)){
     		$trips = DB::table('trips')->get();
-			if (Auth::user()->role == '2') {
+			if (Auth::user()->role == '1') {
 			  	return view('starttrip.index', compact('trips'));
 			  }
-			  elseif (Auth::user()->role == '3') {
+			  elseif (Auth::user()->role == '2') {
 			  	$sessions = DB::table('sessions')->pluck('tripid');
 
 			  	$ids = implode(',', $sessions);
@@ -83,7 +83,7 @@ class StarttripController extends Controller
 	  //isLoggedIn();
    	  //Auth
 		if(isset(Auth::user()->role)){
-   	  		if (Auth::user()->role == '3') {
+   	  		if (Auth::user()->role == '2') {
 			  $trips = Trips::find($tripid);
 			  $tripname = $trips->tripname;
 
@@ -139,7 +139,7 @@ class StarttripController extends Controller
 				return view('alert', compact('error')); 
 			 }
 		  }
-			elseif(Auth::user()->role == '2') {
+			elseif(Auth::user()->role == '1') {
 				$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 				if (in_array($tripid, $tripsessions)) {
 
@@ -176,7 +176,7 @@ class StarttripController extends Controller
     		$error = "1";
 			return view('alert', compact('error'));
   		}
-		elseif (Auth::user()->role == '3') {
+		elseif (Auth::user()->role == '2') {
 			$trips = Trips::find($tripid);
 		  	$tripname = $trips->tripname;
 
@@ -260,7 +260,7 @@ class StarttripController extends Controller
     		$error = "1";
 			return view('alert', compact('error'));
   		}
-    	elseif (Auth::user()->role == '3') {
+    	elseif (Auth::user()->role == '2') {
 	    	$user =  Auth::user();
 
 			$userid = $user->id;
@@ -338,7 +338,7 @@ class StarttripController extends Controller
     		$error = "1";
 			return view('alert', compact('error'));
   		}
-		elseif (Auth::user()->role == '2') {
+		elseif (Auth::user()->role == '1') {
 			$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid');
 			if (in_array($tripid, $tripsessions)) {
 				DB::table('tripsessions')->where('tripid', '=', $tripid)->delete();
@@ -380,7 +380,7 @@ class StarttripController extends Controller
     		$error = "1";
 			return view('alert', compact('error'));
   	  }
-	  elseif (Auth::user()->role == '2') {
+	  elseif (Auth::user()->role == '1') {
 	   	  $sessions = DB::table('sessions')->pluck('tripid');
 	   	  if (in_array($tripid, $sessions)) {
 	   	  	DB::select( DB::raw("DELETE FROM sessions WHERE tripid = $tripid") );
@@ -408,7 +408,7 @@ class StarttripController extends Controller
     		$error = "1";
 			return view('alert', compact('error'));
   		}
-		elseif (Auth::user()->role == '2') {
+		elseif (Auth::user()->role == '1') {
 		  $tripsessions = DB::table('tripsessions')->pluck('tripid');
 	   	  if (in_array($tripid, $tripsessions)) {
 	   	  	DB::select( DB::raw("DELETE FROM tripsessions WHERE tripid = $tripid") );
@@ -476,10 +476,10 @@ class StarttripController extends Controller
 
 		  $teams = DB::table('teams')->get();
 
-		  if (Auth::user()->role == '2') {
+		  if (Auth::user()->role == '1') {
 		  	return view('starttrip.teamoverviewsuperuser', compact('teams','tripname','tripid'));
 		  }
-		  elseif (Auth::user()->role == '3') {
+		  elseif (Auth::user()->role == '2') {
 		  	 $checkteam = DB::table('teamsusers')->where('userids', $userid)->pluck('userids');
 
 		  	  if (in_array($userid, $checkteam)) {
@@ -490,9 +490,6 @@ class StarttripController extends Controller
 		  	  }
 		  	 return view('starttrip.teamoverviewuser', compact('teams','tripname','tripid','starttripbutton','outteam'));
 
-		  }
-		  elseif (Auth::user()->role == '1') {
-		  	 return view('starttrip.teamoverviewsuperuser', compact('teams','tripname','tripid'));
 		  }
 	  }
 	  else{
@@ -510,7 +507,7 @@ class StarttripController extends Controller
 			$error = "1";
 			return view('alert', compact('error'));
   	    }
-		elseif (Auth::user()->role == '3') {
+		elseif (Auth::user()->role == '2') {
 			$sessions = DB::table('sessions')->pluck('tripid');
 			if (in_array($tripid, $sessions)){
 				$user =  Auth::user();
@@ -537,7 +534,7 @@ class StarttripController extends Controller
 				  return view('alert', compact('error'));
 				}
 			  	else{
-			  		$users = DB::select(DB::raw("SELECT * FROM users WHERE id NOT IN ($teams) AND role = '3'"));  
+			  		$users = DB::select(DB::raw("SELECT * FROM users WHERE id NOT IN ($teams) AND role = '2'"));  
 					return view('starttrip.createteam', compact('tripid','users'));
 			  	}
 			}
@@ -563,7 +560,7 @@ class StarttripController extends Controller
 			$error = "1";
 			return view('alert', compact('error'));
   	  	}
-		elseif (Auth::user()->role == '3') {
+		elseif (Auth::user()->role == '2') {
 
 		   	$user =  Auth::user();
 
@@ -646,7 +643,7 @@ class StarttripController extends Controller
 			$error = "1";
 			return view('alert', compact('error'));
   	    }
-		elseif (Auth::user()->role == '3') {
+		elseif (Auth::user()->role == '2') {
 			$user =  Auth::user();
 
 		  	$userid = $user->id;

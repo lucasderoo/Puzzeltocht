@@ -115,7 +115,11 @@ trait AuthenticatesUsers
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
 
-        return redirect()->intended($this->redirectPath());
+        if(Auth::user()->role == "3"){
+            return redirect()->intended('home/starttrip');     
+        } else {
+            return redirect()->intended($this->redirectPath());
+        }
     }
 
     /**
