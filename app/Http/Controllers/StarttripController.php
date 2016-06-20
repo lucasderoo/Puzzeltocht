@@ -86,7 +86,7 @@ class StarttripController extends Controller
 	  //isLoggedIn();
    	  //Auth
 		if(isset(Auth::user()->role)){
-   	  		if (Auth::user()->role == '2') {
+   	  		/*if (Auth::user()->role == '2') {
 			  $trips = Trips::find($tripid);
 			  $tripname = $trips->tripname;
 
@@ -141,7 +141,7 @@ class StarttripController extends Controller
 			 else{
 			 	$error = "1";
 				return view('alert', compact('error')); 
-			 }
+			 }*/
 
 			if(Auth::user()->role == '1') {
 				$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
