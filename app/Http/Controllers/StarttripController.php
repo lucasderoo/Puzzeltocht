@@ -42,8 +42,11 @@ function Auth(){
     }
 class StarttripController extends Controller
 {
-
-
+	public function testjs()
+   {
+   	return view('starttrip.testjs');
+   }
+	
     public function index()
     {
     	//isLoggedIn();
@@ -83,7 +86,7 @@ class StarttripController extends Controller
 	  //isLoggedIn();
    	  //Auth
 		if(isset(Auth::user()->role)){
-   	  		if (Auth::user()->role == '3') {
+   	  		/*if (Auth::user()->role == '3') {
 			  $trips = Trips::find($tripid);
 			  $tripname = $trips->tripname;
 
@@ -111,6 +114,7 @@ class StarttripController extends Controller
 
 			  $assignments =  DB::table('tripsassignments')
 	            ->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+	            ->where('tripids',$tripid)
 	            ->get();
 
 	          $team = DB::table('teams')
@@ -138,13 +142,14 @@ class StarttripController extends Controller
 			 	$error = "1";
 				return view('alert', compact('error')); 
 			 }
-		  }
-			elseif(Auth::user()->role == '2') {
+		  }*/
+			if(Auth::user()->role == '2') {
 				$tripsessions = DB::table('tripsessions')->where('tripid', $tripid)->pluck('tripid'); 
 				if (in_array($tripid, $tripsessions)) {
 
 					 $assignments =  DB::table('tripsassignments')
 		            ->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+		            ->where('tripids',$tripid)
 		            ->get();
 
 		            $count = count($assignments);
@@ -188,6 +193,7 @@ class StarttripController extends Controller
 
 		  	$assignments =  DB::table('tripsassignments')
             	->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+            	->where('tripids',$tripid)
             	->get();
 
             $user =  Auth::user();
@@ -269,6 +275,7 @@ class StarttripController extends Controller
 
 		    $assignments =  DB::table('tripsassignments')
 	        	->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+	        	->where('tripids',$tripid)
 	        	->get();
 
 	      	$count = count($assignments);
@@ -488,7 +495,22 @@ class StarttripController extends Controller
 		  	  else{
 		  	  	$outteam = "2";
 		  	  }
-		  	 return view('starttrip.teamoverviewuser', compact('teams','tripname','tripid','starttripbutton','outteam'));
+		  	 $assignments =  DB::table('tripsassignments')
+	        	->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
+	        	->where('tripids',$tripid)
+	        	->get();
+
+		  	 $completed = DB::table('teamsusers')->where('userids', $userid)->pluck('completed');
+
+			 $completed = (int)implode('',$completed);
+			 $completed++;
+
+			 $count = count($assignments);
+
+	         $tripdone = $count;
+	         $tripdone++;
+
+		  	 return view('starttrip.teamoverviewuser', compact('teams','tripname','tripid','starttripbutton','outteam','completed','tripdone'));
 
 		  }
 		  elseif (Auth::user()->role == '1') {
