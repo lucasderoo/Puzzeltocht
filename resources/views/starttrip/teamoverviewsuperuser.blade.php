@@ -83,6 +83,8 @@
 <div class="page-header">
    <h1>Teams voor "{{$tripname}}"</h1>
       <a href="/home/starttrip/newtripsession/{{$tripid}}" class="btn btn-success tocht">Start de tocht!</a>
+      <a href="/home/starttrip/createteams/{{$tripid}}" class="btn btn-success tocht">Nieuw Team</a>
+      <a href="/home/starttrip/usersteams" class="btn btn-success tocht">Overzicht deelnemers</a>
 </div>
 <table class="table table-striped">
  <tr>

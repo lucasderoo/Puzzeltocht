@@ -17,10 +17,10 @@ function Auth(){
     if (Auth::guest()) {
       echo '<script>window.location.href = "/Puzzeltocht4/public/login";</script>';
     }
-    elseif (Auth::user()->role == '2') {
+    elseif (Auth::user()->role == '1') {
       echo '<script>window.location.href = "home/;</script>';
     }
-    elseif (Auth::user()->role == '3') {
+    elseif (Auth::user()->role == '2') {
       echo '<script>window.location.href = "home";</script>';
     }
   }

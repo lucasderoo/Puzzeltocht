@@ -67,8 +67,7 @@
                             <div class="col-md-6">
                                 <select name="role" class="">
                                   <option value="1">Beheerder</option>
-                                  <option value="2">Superuser</option>
-                                  <option value="3">Leerling</option>
+                                  <option value="2">Leerling</option>
                                 </select>
                             </div>
                         </div>
