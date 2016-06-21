@@ -679,21 +679,25 @@ class StarttripController extends Controller
 
 		  	$teamid = implode('',$teamid);
 
+		  	$outteam = DB::table('teamsusers')->where('userids', $userid)->delete();
+
 		  	$team = DB::table('teamsusers')->where('teamids', $teamid)->get();
 
 		  	$count = count($team);
 
-		  	$teamsize = (int)$count;
+		  	if($count < "2"){
+		  		DB::table('teamsusers')->where('teamids', $teamid)->delete();
+		  		DB::table('teams')->where('id', $teamid)->delete();
+		  		return redirect('/home/starttrip/teamoverview/' .$tripid);
+		  	}
 
-		  	--$teamsize;
+		  	$team = DB::table('teamsusers')->where('teamids', $teamid)->get();
 
-		  	$teamsize = (string)$teamsize;
+		  	$teamsize = count($team);
 
 		  	DB::table('teams')->where('id', $teamid)->update([
-						'teamsize' => $teamsize,
+				'teamsize' => $teamsize,
 			]);
-
-		  	$outteam = DB::table('teamsusers')->where('userids', $userid)->delete();
 
 		  	return redirect('/home/starttrip/teamoverview/' .$tripid);
 		}
@@ -713,10 +717,10 @@ class StarttripController extends Controller
 
 			foreach($teams as $team) { 
 				if($team->teamids == ""){
-	  				$team->inteam = "No"; 
+	  				$team->inteam = "Nee"; 
 				}
 				else{
-					$team->inteam = "Yes"; 
+					$team->inteam = "Ja"; 
 				}
 	  	  	}
 			return view('starttrip.usersteams', compact('teams'));
