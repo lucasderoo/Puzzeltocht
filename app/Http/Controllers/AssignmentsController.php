@@ -196,7 +196,10 @@ class AssignmentsController extends Controller
           return "ERROR";
         }
         $assignments = Assignments::find($id);
-        return view('assignments.edit',compact('assignments','id','tripid','prevurl'));
+
+
+        $correct_answer = $assignments->correct_answer;
+        return view('assignments.edit',compact('assignments','id','tripid','prevurl','correct_answer'));
     }
     else{
       $error = "1";

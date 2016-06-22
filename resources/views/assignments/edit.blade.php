@@ -92,6 +92,7 @@ h3 {
 
   <h3>Antwoorden</h3>
 
+  @if($correct_answer == "answer_1")
   <label for="answer_1" >Antwoord 1:</label>
   <label><input name="correct_answer" type="radio" value="answer_1" checked></label>
     <input value="{{ $assignments->answer_1 }}" name="answer_1" type="text" class="form-control" id="usr" required="required">
@@ -103,6 +104,31 @@ h3 {
   <label for="answer_3">Antwoord 3:</label>
   <label><input name="correct_answer" type="radio" value=""></label>
     <input value="{{ $assignments->answer_3 }}" name="answer_3" type="text" class="form-control" id="usr" required="required">
+  @elseif($correct_answer == "answer_2")
+  <label for="answer_1" >Antwoord 1:</label>
+  <label><input name="correct_answer" type="radio" value="answer_1" ></label>
+    <input value="{{ $assignments->answer_1 }}" name="answer_1" type="text" class="form-control" id="usr" required="required">
+
+  <label for="answer_2">Antwoord 2:</label>
+  <label><input name="correct_answer" type="radio" value="" checked></label>
+    <input value="{{ $assignments->answer_2 }}" name="answer_2" type="text" class="form-control" id="usr" required="required">
+
+  <label for="answer_3">Antwoord 3:</label>
+  <label><input name="correct_answer" type="radio" value=""></label>
+    <input value="{{ $assignments->answer_3 }}" name="answer_3" type="text" class="form-control" id="usr" required="required">
+  @elseif($correct_answer == "answer_3")
+  <label for="answer_1" >Antwoord 1:</label>
+  <label><input name="correct_answer" type="radio" value="answer_1" ></label>
+    <input value="{{ $assignments->answer_1 }}" name="answer_1" type="text" class="form-control" id="usr" required="required">
+
+  <label for="answer_2">Antwoord 2:</label>
+  <label><input name="correct_answer" type="radio" value=""></label>
+    <input value="{{ $assignments->answer_2 }}" name="answer_2" type="text" class="form-control" id="usr" required="required">
+
+  <label for="answer_3">Antwoord 3:</label>
+  <label><input name="correct_answer" type="radio" value="" checked></label>
+    <input value="{{ $assignments->answer_3 }}" name="answer_3" type="text" class="form-control" id="usr" required="required">
+  @endif
 
   <h3>Locatie</h3>
 
