@@ -146,6 +146,7 @@ class StarttripController extends Controller
 					 $assignments =  DB::table('tripsassignments')
 		            ->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
 		            ->where('tripids',$tripid)
+		            ->Where('active','Y')
 		            ->get();
 
 		            $count = count($assignments);
@@ -190,6 +191,7 @@ class StarttripController extends Controller
 		  	$assignments =  DB::table('tripsassignments')
             	->join('assignments', 'assignments.id', '=', 'tripsassignments.assignmentsids')
             	->where('tripids',$tripid)
+            	->Where('active','Y')
             	->get();
 
             $user =  Auth::user();

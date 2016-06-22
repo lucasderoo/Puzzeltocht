@@ -112,7 +112,7 @@ h3 {
     <input name="longitude" type="text" class="form-control" id="usr">
 
   <label for="latitude">Latitude:</label>
-    <input name="latitude" type="text" class="form-control" id="usr" >
+    <input name="latitude" type="text" class="form-control" id="usr">
 </div>
 
 <div class="page-header">

@@ -238,16 +238,13 @@ class TripsController extends Controller
 
 			  $name = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('assignmentsids');
 
-			  $actives = DB::table('tripsassignments')->where('tripids', $tripid)->pluck('active');
-
 			  $ids = implode(',', $name);
 
-			  $assignments = DB::select( DB::raw("SELECT * FROM assignments WHERE id IN($ids)") );
+			  $assignments = DB::table('tripsassignments')->where('tripids', $tripid)
+			  ->join('assignments','id','=','tripsassignments.assignmentsids')
+			  ->get();
 
-			  foreach($actives as $key => $value) { 
-			  	$assignments[$key]->active = $value; 
-			  }
-
+		 
 			  return view('trips.edit',compact('assignments','tripid','tripname'));
 			}
 			else{
