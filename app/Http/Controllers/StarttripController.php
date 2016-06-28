@@ -358,7 +358,7 @@ class StarttripController extends Controller
 
 				return redirect('/home/starttrip'); 
 			}
-			elseif(Auth::user()->role == "3"){
+			elseif(Auth::user()->role == "2"){
 				return redirect('/home/starttrip/start/result/'.$tripid); 
 			}
 			else{
@@ -367,7 +367,7 @@ class StarttripController extends Controller
 				return view('alert', compact('error'));
 			}
 		}
-		elseif(Auth::user()->role == "3"){
+		elseif(Auth::user()->role == "2"){
 		  return redirect('/home/starttrip/start/result/'.$tripid); 
 		}
 		else{
