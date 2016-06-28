@@ -112,7 +112,7 @@
  </tr>
  <tdbody>
     @foreach ($assignments as $assignment)
-    <tr class='clickable-row DataTR' data-href="/home/opdrachten/show/{{$assignment->id}}/{{$tripid}}">
+    <tr value=""class='clickable-row DataTR' data-href="/home/opdrachten/show/{{$assignment->id}}/{{$tripid}}">
         <td>{{ $assignment->type }}</td>
         <td>{{ $assignment->title }}</td>
         <?php 

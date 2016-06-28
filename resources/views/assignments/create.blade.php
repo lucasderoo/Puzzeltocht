@@ -64,7 +64,9 @@ h3 {
 .btn-success {
   margin-bottom: 30px;
 }
-
+#pointsinput{
+  display: none;
+}
 
 </style>
 @section('content')
@@ -113,10 +115,27 @@ h3 {
 
   <label for="latitude">Latitude:</label>
     <input name="latitude" type="text" class="form-control" id="usr">
+
+    <label for="points">Punten</label>
+      <input name="pointstoggle" type="checkbox" id="pointstoggles">
+  <div class="points">
+      <input name="points" type="number" class="form-control" id="pointsinput">
+  </div>
+
 </div>
 
 <div class="page-header">
 </div>
+<script>
+$(document).ready(function(){
+    $('#pointstoggles').change(function(){
+        if(this.checked)
+            $('#pointsinput').fadeIn('slow');
+        else
+            $('#pointsinput').fadeOut('slow');
+    });
+});
+</Script>
 
 {!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
 {!! Form::close() !!}

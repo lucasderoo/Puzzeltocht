@@ -300,22 +300,42 @@ class StarttripController extends Controller
 			$inteam = DB::table('teamsusers')->where('userids', $userid)->pluck('teamids');
 			$inteam = implode('',$inteam);
 
+			$teamscore = DB::table('teams')->where('id', $inteam)->pluck('score');
+
+			$teamscore = implode('',$teamscore);
 
 
 			$score = implode('',$score);
 			$completed = implode('',$completed);
 			foreach($item as $question){
 				if($question->correct_answer == $answer){
-					$score += 10;
-					$completed++;
-					DB::table('teamsusers')->where('userids', $userid)->update([
-						'score' => $score,
-						'completed' => $completed,
-			    	]);
-			    	DB::table('teams')->where('id', $inteam)->update([
-						'score' => $score,
-						'completed' => $completed,
-			    	]);
+					if($question->points == ""){
+						$score += 10;
+						$teamscore += 10;
+						$completed++;
+						DB::table('teamsusers')->where('userids', $userid)->update([
+							'score' => $score,
+							'completed' => $completed,
+				    	]);
+				    	DB::table('teams')->where('id', $inteam)->update([
+							'score' => $teamscore,
+							'completed' => $completed,
+				    	]);
+				    }
+				    else{
+				    	$points = $question->points;
+				    	$score += $points;
+				    	$teamscore += $points;
+						$completed++;
+						DB::table('teamsusers')->where('userids', $userid)->update([
+							'score' => $score,
+							'completed' => $completed,
+				    	]);
+				    	DB::table('teams')->where('id', $inteam)->update([
+							'score' => $teamscore,
+							'completed' => $completed,
+				    	]);
+				    }
 				}
 				else{
 					$completed++;
@@ -358,7 +378,7 @@ class StarttripController extends Controller
 
 				return redirect('/home/starttrip'); 
 			}
-			elseif(Auth::user()->role == "3"){
+			elseif(Auth::user()->role == "2"){
 				return redirect('/home/starttrip/start/result/'.$tripid); 
 			}
 			else{
@@ -367,7 +387,7 @@ class StarttripController extends Controller
 				return view('alert', compact('error'));
 			}
 		}
-		elseif(Auth::user()->role == "3"){
+		elseif(Auth::user()->role == "2"){
 		  return redirect('/home/starttrip/start/result/'.$tripid); 
 		}
 		else{
@@ -503,9 +523,15 @@ class StarttripController extends Controller
 		  	 $teamnames = DB::table('teamsusers')->where('userids', $userid)
 		  	 	->join('teams', 'id', '=', 'teamsusers.teamids')
 		  	 	->get();
-		  	foreach($teamnames as $teamname){
-		  		$teamname = $teamname->teamname;
-		  	}
+
+		  	 if (empty($teamnames)) {
+				$teamname = "";
+			  }
+			 else{
+			  	foreach($teamnames as $teamname){
+			  	$teamname = $teamname->teamname;
+			  }
+			}
 
 			 $completed = (int)implode('',$completed);
 			 $completed++;

@@ -29,8 +29,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'web'], function () {
 	Route::get('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm']);
 	Route::post('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@register']);
-	Route::get('/login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm']);
-	Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
+    Route::get('/login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm']);
+    Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
 	Route::get('logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
 
     Route::get('home', 'HomeController@index');
@@ -48,7 +48,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/home/opdrachten/connectassignments/{tripid}/{prevurl}', 'AssignmentsController@connectassignments');
 
     Route::resource('/home/tochten/wait', 'TripsController@wait');
-    Route::resource('/home/tochten', 'TripsController');
+   // Route::resource('/home/tochten', 'TripsController');
+    Route::get('/home/tochten', 'TripsController@index');
     Route::get('/home/tochten/delete/{tripid}', 'TripsController@delete');
     Route::post('/home/tochten/destroy/{tripid}', 'TripsController@destroy');
     Route::get('/home/tochten/create/{user}', 'TripsController@create');
@@ -70,7 +71,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/home/starttrip/outteam/{tripid}', 'StarttripController@outteam');
     Route::get('/home/starttrip/usersteams/', 'StarttripController@usersteams');
 
-    Route::get('home/testjs', 'StarttripController@testjs');
+    Route::get('/test', 'HomeController@test');
 
 
 });

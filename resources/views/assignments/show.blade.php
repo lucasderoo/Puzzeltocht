@@ -29,6 +29,7 @@
 	<p>Latitude: {{ $assignment->latitude }}</p>
 	<p>Laatst geupdate: {{ $assignment->updated_at }}</p>
 	<p>gecreerd: {{ $assignment->created_at }}</p>
+	<p>Punten: {{ $assignment->points }}</p>
 </div>
 <script>
 	var green_answer = document.getElementById('correct_answer').innerHTML;

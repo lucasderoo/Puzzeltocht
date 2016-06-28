@@ -63,7 +63,7 @@
       <tr class='clickable-row DataTR' data-href="/home/tochten/show/{{$trip->id}}">
           <td>{{ $trip->tripname }}</td>
           <td>{{ $trip->assignments }}</td>
-          <td><a href="starttrip/teamoverview/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
+          <td><a href="/home/starttrip/teamoverview/{{$trip->id}}" class="btn btn-primary">Start tocht</a></td>
       </tr>
   @endforeach
   </tbody>

@@ -112,12 +112,15 @@ class AssignmentsController extends Controller
             'correct_answer' => $assignments['correct_answer'],
             'longitude' => $assignments['longitude'],
             'latitude' => $assignments['latitude'],
+            'points' => $assignments['points'],
         ]);
         $newtrips = TripsAssignments::create([
             'tripids' => $tripid,
             'assignmentsids' => $assignments->id,
         ]);
 
+
+        
         return redirect('/home/tochten/'.$prevurl.'/' .$tripid);
       }
       else{

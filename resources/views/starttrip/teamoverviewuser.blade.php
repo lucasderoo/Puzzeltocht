@@ -75,6 +75,9 @@
 .btn-succes{
   margin-right: 10px;
 }
+.{
+  float: left;
+}
 
 </style>
 @section('content')
@@ -99,6 +102,9 @@
     {!! Form::close() !!}
   @endif
  
+</div>
+<div>
+<a class="btn btn-primary">Team - {{$teamname}}</a>
 </div>
 
 <table class="table table-striped">

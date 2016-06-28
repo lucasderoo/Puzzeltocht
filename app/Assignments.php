@@ -17,6 +17,7 @@ class Assignments extends Model
         'tripids',
         'longitude',
         'latitude',
+        'points',
     ];
     protected $table = 'assignments';
 }

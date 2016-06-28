@@ -65,6 +65,9 @@ h3 {
 .btn-success {
   margin-bottom: 30px;
 }
+#pointsinput{
+  display: none;
+}
 </style>
 @section('content')
 <div class="container">
@@ -114,6 +117,12 @@ h3 {
 
   <label for="latitude">Latitude:</label>
     <input value="{{ $assignments->latitude }}" name="latitude" type="text" class="form-control" id="usr">
+
+    <label for="points">Punten</label>
+      <input name="pointstoggle" type="checkbox" id="pointstoggles">
+  <div class="points">
+      <input name="points" type="number" class="form-control" id="pointsinput">
+  </div>
 </div>
 
 <div class="page-header">

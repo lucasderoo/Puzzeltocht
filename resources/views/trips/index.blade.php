@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 <style>
 .jumbotron{
     background-color:#2E2D88;
@@ -58,7 +59,6 @@
     <h1>Tochten</h1>
      <a href="/home/tochten/wait" class="btn btn-success tocht"><span class="glyphicon glyphicon-edit"></span> Nieuwe Tocht</a>
  </div>
-
 <table class="table table-striped">
  <tr>
    <th>Tochtnaam</th>
@@ -71,13 +71,15 @@
     <h1>No data found</h1>
   </div>
 <?php else : ?>
-<script>
-    jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.document.location = $(this).data("href");
-    });
-    });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript">
+function check_changes(){
+  $result=$this-&gt;db-&gt;query("SELECT tripname FROM trips");
+  $result=$this-&gt;db-&gt;fetch_array($result);
+  return $result[&lsquo;counting&rsquo;];
+}
 </script>
+<div id="show23">
 @foreach ($trips as $trip)
  <tr class="clickable-row" data-href="/home/tochten/show/{{$trip->id}}">
    <td>{{ $trip->tripname }}</td>
@@ -86,6 +88,7 @@
    <td><a href="/home/tochten/delete/{{$trip->id}}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</a></td>
  </tr>
 @endforeach
+</div>
 </table>
 <?php endif; ?>
 <div class="page-header">
